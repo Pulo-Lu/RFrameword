@@ -11,7 +11,7 @@
 		</list>
 	</variable>
 	<variable name = "MonsterBuffList" type = "list">
-		<list name = "BuffType" sheetname = "所有Buff配置" mainKey = "Id">
+		<list name = "BuffType" sheetname = "怪物Buff配置" mainKey = "Id">
 			<variable name = "Id" col = "ID"  type = "int"/>
 			<variable name = "Name" col = "名字"  type = "string"/>
 			<variable name = "OutLook" col = "预置路径"  type = "string"/>
