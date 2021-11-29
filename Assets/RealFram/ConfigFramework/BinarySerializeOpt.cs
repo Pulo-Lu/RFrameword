@@ -156,6 +156,7 @@ public class BinarySerializeOpt
 
   /// <summary>
   /// 二进制反序列化
+  /// 读取二进制
   /// </summary>
   /// <typeparam name="T"></typeparam>
   /// <param name="path"></param>
