@@ -17,7 +17,7 @@ public class BuffData : ExcelBase
             BuffBase buff = new BuffBase();
             buff.Id = i + 1;
             buff.Name = "全BUFF" + i;
-            buff.OutLonk = "Assets/GameData/..." + i;
+            buff.OutLook = "Assets/GameData/..." + i;
             buff.Time = Random.Range(0.5f, 10f);
             buff.BuffType =(BuffEnum)Random.Range(0, 4);
             AllBuffList.Add(buff);
@@ -29,7 +29,7 @@ public class BuffData : ExcelBase
             BuffBase buff = new BuffBase();
             buff.Id = i + 1;
             buff.Name = "全BUFF" + i;
-            buff.OutLonk = "Assets/GameData/..." + i;
+            buff.OutLook = "Assets/GameData/..." + i;
             buff.Time = Random.Range(0.5f, 10f);
             buff.BuffType = (BuffEnum)Random.Range(0, 4);
             MonsterBuffList.Add(buff);
@@ -102,7 +102,7 @@ public class BuffBase
     public string Name { get; set; }
 
     [XmlAttribute("OutLook")]
-    public string OutLonk { get; set; }
+    public string OutLook { get; set; }
 
     [XmlAttribute("Time")]
     public float Time { get; set; }
