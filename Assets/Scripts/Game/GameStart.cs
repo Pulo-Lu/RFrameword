@@ -38,9 +38,13 @@ public class GameStart : MonoSingleton<GameStart>
         UIManager.Instance.Register<LoadingUI>(ConStr.LOADINGPANEL);
     }
 
+    /// <summary>
+    /// 加载配置表
+    /// </summary>
     void LoadConfiger()
     {
-
+        ConfigManager.Instance.LoadData<MonsterData>(CFG.TABLE_MONSTER);
+        ConfigManager.Instance.LoadData<BuffData>(CFG.TABLE_BUFF);
     }
 
     private void Update()
