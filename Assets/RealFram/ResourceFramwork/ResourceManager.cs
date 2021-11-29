@@ -419,6 +419,15 @@ public class ResourceManager : Singleton<ResourceManager>
                     obj = item.m_AssetBundle.LoadAsset<T>(item.m_AssetName);
                 }
             }
+            else
+            {
+                if (item == null)
+                {
+                    item = new ResouceItem();
+                    item.m_Crc = crc;
+                }
+                obj = LoadAssetByEditor<T>(path);
+            }
         }
 #endif
 
