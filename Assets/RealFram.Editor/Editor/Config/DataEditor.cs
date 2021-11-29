@@ -41,6 +41,19 @@ public class DataEditor
         EditorUtility.ClearProgressBar();
     }
 
+    [MenuItem("Assets/Xml转Excel")]
+    public static void AssetsXmlToExcel()
+    {
+        UnityEngine.Object[] objs = Selection.objects;
+        for (int i = 0; i < objs.Length; i++)
+        {
+            EditorUtility.DisplayCancelableProgressBar("文件下的Xml转Excel", "正在扫描" + objs[i].name + "... ...", 1.0f / objs.Length * i);
+            XmlToExcel(objs[i].name);
+        }
+        AssetDatabase.Refresh();
+        EditorUtility.ClearProgressBar();
+    }
+
     [MenuItem("Tools/Xml/Xml转成二进制")]
     public static void AllXmlToBinary()
     {
@@ -59,6 +72,7 @@ public class DataEditor
         AssetDatabase.Refresh();
         EditorUtility.ClearProgressBar();
     }
+
 
     [MenuItem("Tools/测试/测试读取Xml")]
     public static void TestReadXml()
@@ -318,11 +332,13 @@ public class DataEditor
         }
     }
 
-    [MenuItem("Tools/Xml/Xml转Excel")]
-    public static void XmlToExcel()
+    /// <summary>
+    /// Xml转Excel
+    /// </summary>
+    /// <param name="name"></param>
+    private static void XmlToExcel(string name)
     {
-        //类名
-        string name = "MonsterData";
+
         //读取 reg 类名
         string className = "";
         //读取 xml 名
@@ -385,6 +401,7 @@ public class DataEditor
                     {
                         ExcelRange range = worksheet.Cells[1, i + 1];
                         range.Value = sheetData.AllName[i];
+                        range.AutoFitColumns();
                     }
 
                     //遍历 sheet 表的行 ，并赋值
@@ -396,6 +413,7 @@ public class DataEditor
                         {
                             ExcelRange range = worksheet.Cells[i + 2, j + 1];
                             range.Value = rowData.RowDataDic[sheetData.AllName[j]];
+                            range.AutoFitColumns();
                         }
                     }
                }
