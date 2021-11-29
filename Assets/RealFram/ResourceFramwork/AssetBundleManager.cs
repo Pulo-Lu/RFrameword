@@ -20,6 +20,9 @@ public class AssetBundleManager: Singleton<AssetBundleManager>
     /// <returns></returns>
     public bool LoadAssetBundleConfig()
     {
+        if (!ResourceManager.Instance.m_LoadFormAssetBundle)
+            return false;
+
         m_ResouceItemDic.Clear();
         string configPath = Application.dataPath + "/../AssetBundle/" + EditorUserBuildSettings.activeBuildTarget.ToString() + "/assetbundleconfig";
         AssetBundle configAB = AssetBundle.LoadFromFile(configPath);
