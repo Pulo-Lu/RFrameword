@@ -1,18 +1,86 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <BuffData xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <AllBuffList Id="1" Name="全BUFF0" OutLook="Assets/GameData/...0" Time="1.26766276" BuffType="Bingdong" />
-  <AllBuffList Id="2" Name="全BUFF1" OutLook="Assets/GameData/...1" Time="5.21260262" BuffType="None" />
-  <AllBuffList Id="3" Name="全BUFF2" OutLook="Assets/GameData/...2" Time="9.682048" BuffType="None" />
-  <AllBuffList Id="4" Name="全BUFF3" OutLook="Assets/GameData/...3" Time="0.7820609" BuffType="Ranshao" />
-  <AllBuffList Id="5" Name="全BUFF4" OutLook="Assets/GameData/...4" Time="1.50159073" BuffType="Du" />
-  <AllBuffList Id="6" Name="全BUFF5" OutLook="Assets/GameData/...5" Time="0.5272873" BuffType="Bingdong" />
-  <AllBuffList Id="7" Name="全BUFF6" OutLook="Assets/GameData/...6" Time="8.423553" BuffType="Bingdong" />
-  <AllBuffList Id="8" Name="全BUFF7" OutLook="Assets/GameData/...7" Time="1.94931543" BuffType="Ranshao" />
-  <AllBuffList Id="9" Name="全BUFF8" OutLook="Assets/GameData/...8" Time="8.345733" BuffType="Bingdong" />
-  <AllBuffList Id="10" Name="全BUFF9" OutLook="Assets/GameData/...9" Time="8.85298" BuffType="Bingdong" />
-  <MonsterBuffList Id="1" Name="全BUFF0" OutLook="Assets/GameData/...0" Time="4.91502857" BuffType="Bingdong" />
-  <MonsterBuffList Id="2" Name="全BUFF1" OutLook="Assets/GameData/...1" Time="8.879028" BuffType="Ranshao" />
-  <MonsterBuffList Id="3" Name="全BUFF2" OutLook="Assets/GameData/...2" Time="4.80976152" BuffType="Bingdong" />
-  <MonsterBuffList Id="4" Name="全BUFF3" OutLook="Assets/GameData/...3" Time="9.020306" BuffType="None" />
-  <MonsterBuffList Id="5" Name="全BUFF4" OutLook="Assets/GameData/...4" Time="0.8799396" BuffType="Ranshao" />
+  <AllBuffList Id="1" Name="全BUFF0" OutLook="Assets/GameData/...0" Time="0.9732068" BuffType="Du">
+    <AllString>测试0</AllString>
+    <AllString>测试q0</AllString>
+    <AllBuffList Id="0" Name="name0" />
+    <AllBuffList Id="4" Name="name1" />
+    <AllBuffList Id="2" Name="name2" />
+  </AllBuffList>
+  <AllBuffList Id="2" Name="全BUFF1" OutLook="Assets/GameData/...1" Time="4.236865" BuffType="Ranshao">
+    <AllString>测试1</AllString>
+    <AllString>测试q1</AllString>
+    <AllBuffList Id="1" Name="name0" />
+    <AllBuffList Id="4" Name="name1" />
+    <AllBuffList Id="2" Name="name2" />
+  </AllBuffList>
+  <AllBuffList Id="3" Name="全BUFF2" OutLook="Assets/GameData/...2" Time="2.425144" BuffType="None">
+    <AllString>测试2</AllString>
+    <AllString>测试q2</AllString>
+    <AllBuffList Id="0" Name="name0" />
+    <AllBuffList Id="5" Name="name1" />
+    <AllBuffList Id="5" Name="name2" />
+  </AllBuffList>
+  <AllBuffList Id="4" Name="全BUFF3" OutLook="Assets/GameData/...3" Time="9.455368" BuffType="Du">
+    <AllString>测试3</AllString>
+    <AllString>测试q3</AllString>
+    <AllBuffList Id="4" Name="name0" />
+    <AllBuffList Id="1" Name="name1" />
+  </AllBuffList>
+  <AllBuffList Id="5" Name="全BUFF4" OutLook="Assets/GameData/...4" Time="5.20285845" BuffType="Ranshao">
+    <AllString>测试4</AllString>
+    <AllString>测试q4</AllString>
+    <AllBuffList Id="1" Name="name0" />
+    <AllBuffList Id="3" Name="name1" />
+  </AllBuffList>
+  <AllBuffList Id="6" Name="全BUFF5" OutLook="Assets/GameData/...5" Time="9.238022" BuffType="Ranshao">
+    <AllString>测试5</AllString>
+    <AllString>测试q5</AllString>
+    <AllBuffList Id="3" Name="name0" />
+  </AllBuffList>
+  <AllBuffList Id="7" Name="全BUFF6" OutLook="Assets/GameData/...6" Time="9.502794" BuffType="Du">
+    <AllString>测试6</AllString>
+    <AllString>测试q6</AllString>
+    <AllBuffList Id="2" Name="name0" />
+  </AllBuffList>
+  <AllBuffList Id="8" Name="全BUFF7" OutLook="Assets/GameData/...7" Time="6.73431635" BuffType="Du">
+    <AllString>测试7</AllString>
+    <AllString>测试q7</AllString>
+  </AllBuffList>
+  <AllBuffList Id="9" Name="全BUFF8" OutLook="Assets/GameData/...8" Time="7.493928" BuffType="Bingdong">
+    <AllString>测试8</AllString>
+    <AllString>测试q8</AllString>
+    <AllBuffList Id="2" Name="name0" />
+    <AllBuffList Id="1" Name="name1" />
+    <AllBuffList Id="4" Name="name2" />
+  </AllBuffList>
+  <AllBuffList Id="10" Name="全BUFF9" OutLook="Assets/GameData/...9" Time="4.165529" BuffType="None">
+    <AllString>测试9</AllString>
+    <AllString>测试q9</AllString>
+    <AllBuffList Id="4" Name="name0" />
+    <AllBuffList Id="5" Name="name1" />
+    <AllBuffList Id="2" Name="name2" />
+  </AllBuffList>
+  <MonsterBuffList Id="1" Name="全BUFF0" OutLook="Assets/GameData/...0" Time="7.60559" BuffType="Ranshao">
+    <AllString>测试a0</AllString>
+    <AllBuffList Id="2" Name="name0" />
+    <AllBuffList Id="4" Name="name1" />
+  </MonsterBuffList>
+  <MonsterBuffList Id="2" Name="全BUFF1" OutLook="Assets/GameData/...1" Time="9.194702" BuffType="Bingdong">
+    <AllString>测试a1</AllString>
+  </MonsterBuffList>
+  <MonsterBuffList Id="3" Name="全BUFF2" OutLook="Assets/GameData/...2" Time="2.50020075" BuffType="Ranshao">
+    <AllString>测试a2</AllString>
+    <AllBuffList Id="4" Name="name0" />
+    <AllBuffList Id="2" Name="name1" />
+    <AllBuffList Id="6" Name="name2" />
+  </MonsterBuffList>
+  <MonsterBuffList Id="4" Name="全BUFF3" OutLook="Assets/GameData/...3" Time="9.497474" BuffType="Du">
+    <AllString>测试a3</AllString>
+    <AllBuffList Id="2" Name="name0" />
+    <AllBuffList Id="3" Name="name1" />
+  </MonsterBuffList>
+  <MonsterBuffList Id="5" Name="全BUFF4" OutLook="Assets/GameData/...4" Time="4.66867065" BuffType="Bingdong">
+    <AllString>测试a4</AllString>
+  </MonsterBuffList>
 </BuffData>

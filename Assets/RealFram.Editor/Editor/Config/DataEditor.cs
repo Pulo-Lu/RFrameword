@@ -412,8 +412,13 @@ public class DataEditor
                         for(int j = 0; j < sheetData.AllData[i].RowDataDic.Count; j++)
                         {
                             ExcelRange range = worksheet.Cells[i + 2, j + 1];
-                            range.Value = rowData.RowDataDic[sheetData.AllName[j]];
+                            string value = rowData.RowDataDic[sheetData.AllName[j]];
+                            range.Value = value;
                             range.AutoFitColumns();
+                            if(value.Contains("\n")|| value.Contains("\r\n"))
+                            {
+                                range.Style.WrapText = true;
+                            }
                         }
                     }
                }
@@ -547,11 +552,24 @@ public class DataEditor
 
             for (int j = 0; j < varList.Count; j++)
             {
-                if (varList[j].Type == "list")
+                if (varList[j].Type == "list" && string.IsNullOrEmpty(varList[j].SplitStr))
                 {
                     SheetClass tempSheetClass = allSheetClassDic[varList[j].ListSheetName];
 
                     ReadData(item,tempSheetClass,allSheetClassDic,sheetDataDic);
+                }
+                else if (varList[j].Type == "list")
+                {
+                    SheetClass tempSheetClass = allSheetClassDic[varList[j].ListSheetName];
+
+                    string value = GetSplitStrList(item,varList[j], tempSheetClass);
+
+                    rowData.RowDataDic.Add(varList[j].Col, value);
+                }
+                else if (varList[j].Type == "listStr" || varList[j].Type == "listFloat" || varList[j].Type == "listInt" || varList[j].Type == "listBool")
+                {
+                    string value = GetSplitBaseList(item, varList[j]);
+                    rowData.RowDataDic.Add(varList[j].Col, value);
                 }
                 else
                 {
@@ -578,6 +596,82 @@ public class DataEditor
                 sheetDataDic.Add(key, sheetData);
             }
         }
+    }
+
+    /// <summary>
+    /// 获取本身是一个类的类表，但是数据比较小；（没办法确定父级结构的）
+    /// </summary>
+    /// <returns></returns>
+    private static string GetSplitStrList(object data,VarClass varClass,SheetClass sheetClass)
+    {
+        string split = varClass.SplitStr;
+        string classSplit = sheetClass.SplitStr;
+        string str = "";
+        if(string.IsNullOrEmpty(split)|| string.IsNullOrEmpty(classSplit))
+        {
+            Debug.LogError("类的列类分割符或变量分隔符为空！");
+
+            return str;
+        }
+
+        object dataList = GetMemberValue(data, varClass.Name);
+
+        int listCount = System.Convert.ToInt32(dataList.GetType().InvokeMember("get_Count", BindingFlags.Default |
+            BindingFlags.InvokeMethod, null, dataList, new object[] { }));
+
+        for (int i = 0; i < listCount; i++)
+        {
+            object item = dataList.GetType().InvokeMember("get_Item", BindingFlags.Default |
+                BindingFlags.InvokeMethod, null, dataList, new object[] { i });
+            for (int j = 0; j < sheetClass.VarList.Count; j++) 
+            {
+                object value = GetMemberValue(item, sheetClass.VarList[j].Name);
+                str += value.ToString();
+                if (j != sheetClass.VarList.Count - 1)
+                {
+                    str += classSplit.Replace("\\n","\n").Replace("\\r", "\r");
+                }
+            }
+            if (i != listCount - 1)
+            {
+                str += split.Replace("\\n", "\n").Replace("\\r", "\r");
+            }
+        }
+        return str;
+    }
+
+    /// <summary>
+    /// 获取基础List 里面的所有值并用分隔符隔开
+    /// </summary>
+    /// <param name="data">具体的类</param>
+    /// <param name="varClass"> 传进来的varClass</param>
+    /// <returns></returns>
+    private static string GetSplitBaseList(object data,VarClass varClass)
+    {
+        string str = "";
+        if(string.IsNullOrEmpty(varClass.SplitStr))
+        {
+            Debug.LogError("基础List 的分割符为空！");
+            return str;
+        }
+        
+        object dataList = GetMemberValue(data, varClass.Name);
+
+        int listCount = System.Convert.ToInt32(dataList.GetType().InvokeMember("get_Count", BindingFlags.Default | BindingFlags.InvokeMethod,
+            null, dataList, new object[] { }));
+
+        for(int i = 0; i < listCount; i++)
+        {
+            object item = dataList.GetType().InvokeMember("get_Item", BindingFlags.Default | BindingFlags.InvokeMethod,
+            null, dataList, new object[] { i });
+            str += item.ToString();
+
+            if (i != listCount - 1)
+            {
+                str += varClass.SplitStr.Replace("\\n", "\n").Replace("\\r", "\r");
+            }
+        }
+        return str;
     }
 
     /// <summary>
