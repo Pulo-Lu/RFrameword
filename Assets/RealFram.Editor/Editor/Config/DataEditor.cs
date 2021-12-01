@@ -15,6 +15,9 @@ public class DataEditor
     public static string BinaryPath = "Assets/GameData/Data/Binary/";
     public static string ScriptsPath = "Assets/Scripts/Data/";
 
+    public static string ExcelPath = Application.dataPath + "/../Data/Excel/";
+    public static string RegPath = Application.dataPath + "/../Data/Reg/";
+
     [MenuItem("Assets/类转xml")]
     public static void AssetsClassToXml()
     {
@@ -72,7 +75,6 @@ public class DataEditor
         AssetDatabase.Refresh();
         EditorUtility.ClearProgressBar();
     }
-
 
     [MenuItem("Tools/测试/测试读取Xml")]
     public static void TestReadXml()
@@ -332,6 +334,68 @@ public class DataEditor
         }
     }
 
+    [MenuItem("Tools/测试/测试Excel转Xml")]
+    public static void ExcelToXml()
+    {
+        string name = "MonsterData";
+        //读取 reg 类名
+        string className = "";
+        //读取 xml 名
+        string xmlName = "";
+        //读取 Excel 名
+        string excelName = "";
+
+        //第一步，读取Reg文件，确定类的结构 
+        Dictionary<string, SheetClass> allSheetClassDic = ReadReg(name, ref excelName, ref xmlName, ref className);
+
+        //第二步，读取excel里面的数据
+        string excelPath = ExcelPath + excelName;
+        //sheetData 里面的数据
+        Dictionary<string, SheetData> sheetDataDic = new Dictionary<string, SheetData>();
+        try
+        {
+            //在文件打开的情况下进行读取 FileShare.ReadWrite
+            using (FileStream stream = new FileStream(excelPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+            {
+                using(ExcelPackage package = new ExcelPackage(stream))
+                {
+                    //获取页数
+                    ExcelWorksheets worksheetsArray = package.Workbook.Worksheets;
+                    //遍历每个页签
+                    for(int i =0;i< worksheetsArray.Count; i++)
+                    {
+                        SheetData sheetData = new SheetData();
+                        ExcelWorksheet worksheet = worksheetsArray[i + 1];
+                        SheetClass sheetClass = allSheetClassDic[worksheet.Name];
+
+                        //获取最大列（即列数）
+                        int colCount = worksheet.Dimension.End.Column;
+                        //获取最大列（即行数）
+                        int rowCount = worksheet.Dimension.End.Row;
+
+                        for(int j = 0; j < sheetClass.VarList.Count; j++)
+                        {
+                            sheetData.AllName.Add(sheetClass.VarList[j].Name);
+                            sheetData.AllType.Add(sheetClass.VarList[j].Type);
+                        }
+
+                    }
+
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            Debug.LogError(e);
+            return;
+        }
+ 
+
+     
+        //根据类的结构，创建类，并且给每个变量赋值（从excel里读出来的值）
+
+    }
+
     /// <summary>
     /// Xml转Excel
     /// </summary>
@@ -371,7 +435,7 @@ public class DataEditor
             ReadData(data, outSheetList[i], allSheetClassDic, sheetDataDic,"");
         }
 
-        string xlsxPath = Application.dataPath.Replace("Assets", "/Data/Excel/" + excelName);
+        string xlsxPath = ExcelPath + excelName;
         if (FileIsUsed(xlsxPath))
         {
             Debug.LogError("文件被占用，无法修改");
@@ -445,7 +509,7 @@ public class DataEditor
     private static Dictionary<string, SheetClass> ReadReg(string name, ref string excelName,
         ref string xmlName, ref string className)
     {
-        string regPath = Application.dataPath + "/../Data/Reg/" + name + ".xml";
+        string regPath = RegPath + name + ".xml";
         if (!File.Exists(regPath))
         {
             Debug.LogError("此数据不存在配置变化xml: " + name);
