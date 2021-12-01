@@ -103,7 +103,7 @@ public class DataEditor
                 XmlElement listElement = (XmlElement)listNode;
                 string listName = listElement.GetAttribute("name");
                 string sheetName = listElement.GetAttribute("sheetname");
-                string mainKey = listElement.GetAttribute("mainKey");
+                string mainKey = listElement.GetAttribute("mainkey");
                 Debug.Log("List: " + listName + " " + sheetName + " " + mainKey);
                 foreach(XmlNode xmlNode in listElement.ChildNodes)
                 {
@@ -368,7 +368,7 @@ public class DataEditor
 
         for (int i = 0; i < outSheetList.Count; i++)
         {
-            ReadData(data, outSheetList[i], allSheetClassDic, sheetDataDic);
+            ReadData(data, outSheetList[i], allSheetClassDic, sheetDataDic,"");
         }
 
         string xlsxPath = Application.dataPath.Replace("Assets", "/Data/Excel/" + excelName);
@@ -510,7 +510,7 @@ public class DataEditor
         }
 
         return null;
-    } 
+    }
 
     /// <summary>
     /// 递归读取类里面的数据
@@ -519,8 +519,8 @@ public class DataEditor
     /// <param name="sheetClass"></param>
     /// <param name="allSheetClassDic"></param>
     /// <param name="sheetDataDic"></param>
-    private static void ReadData(object data,SheetClass sheetClass,Dictionary<string ,SheetClass> allSheetClassDic,
-        Dictionary<string, SheetData> sheetDataDic)
+    private static void ReadData(object data, SheetClass sheetClass, Dictionary<string, SheetClass> allSheetClassDic,
+        Dictionary<string, SheetData> sheetDataDic, string mainKey)
     {
         //获取sheetClass里存储所有变量的List
         List<VarClass> varList = sheetClass.VarList;
@@ -534,6 +534,12 @@ public class DataEditor
 
         SheetData sheetData = new SheetData();
 
+        if (!string.IsNullOrEmpty(varClass.Foregin))
+        {
+            sheetData.AllName.Add(varClass.Foregin);
+            sheetData.AllType.Add(varClass.Type);
+        }
+
         for(int i = 0; i < varList.Count; i++)
         {
             if (!string.IsNullOrEmpty(varList[i].Col))
@@ -543,6 +549,8 @@ public class DataEditor
             }
         }
 
+        string tempKey = mainKey;
+
         for (int i = 0; i < listCount; i++)
         {
             object item = dataList.GetType().InvokeMember("get_Item", BindingFlags.Default |
@@ -550,13 +558,24 @@ public class DataEditor
 
             RowData rowData = new RowData();
 
+            if (!string.IsNullOrEmpty(varClass.Foregin) && !string.IsNullOrEmpty(tempKey))
+            {
+                rowData.RowDataDic.Add(varClass.Foregin, tempKey);
+            }
+
+            //计算mainKey
+            if (!string.IsNullOrEmpty(sheetClass.MainKey))
+            {
+                mainKey = GetMemberValue(item, sheetClass.MainKey).ToString();
+            }
+
             for (int j = 0; j < varList.Count; j++)
             {
                 if (varList[j].Type == "list" && string.IsNullOrEmpty(varList[j].SplitStr))
                 {
                     SheetClass tempSheetClass = allSheetClassDic[varList[j].ListSheetName];
 
-                    ReadData(item,tempSheetClass,allSheetClassDic,sheetDataDic);
+                    ReadData(item,tempSheetClass,allSheetClassDic,sheetDataDic,mainKey);
                 }
                 else if (varList[j].Type == "list")
                 {
@@ -566,7 +585,8 @@ public class DataEditor
 
                     rowData.RowDataDic.Add(varList[j].Col, value);
                 }
-                else if (varList[j].Type == "listStr" || varList[j].Type == "listFloat" || varList[j].Type == "listInt" || varList[j].Type == "listBool")
+                else if (varList[j].Type == "listStr" || varList[j].Type == "listFloat" 
+                    || varList[j].Type == "listInt" || varList[j].Type == "listBool")
                 {
                     string value = GetSplitBaseList(item, varList[j]);
                     rowData.RowDataDic.Add(varList[j].Col, value);
@@ -574,7 +594,7 @@ public class DataEditor
                 else
                 {
                     object value = GetMemberValue(item, varList[j].Name);
-                    if (value != null)
+                    if (varList != null)
                     {
                         rowData.RowDataDic.Add(varList[j].Col, value.ToString());
                     }
