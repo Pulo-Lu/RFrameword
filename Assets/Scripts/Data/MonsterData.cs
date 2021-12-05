@@ -82,7 +82,7 @@ public class MonsterBase
     public int Rare { get; set; }
     //怪物高度
     [XmlAttribute("Height")]
-    public int Height { get; set; }
+    public float Height { get; set; }
    
 }
 
