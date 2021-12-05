@@ -337,7 +337,7 @@ public class DataEditor
     [MenuItem("Tools/测试/测试Excel转Xml")]
     public static void ExcelToXml()
     {
-        string name = "MonsterData";
+        string name = "BuffData";
         //读取 reg 类名
         string className = "";
         //读取 xml 名
@@ -464,12 +464,24 @@ public class DataEditor
             for(int j = 0; j < sheetClass.VarList.Count; j++)
             {
                 VarClass varClass = sheetClass.VarList[j];
-                if(varClass.Type == "list")
+                if(varClass.Type == "list" && string.IsNullOrEmpty(varClass.SplitStr))
                 {
                     //递归
                     ReadDataToClass(addItem, allSheetClassDic[varClass.ListSheetName],
                         sheetDataDic[varClass.ListSheetName], allSheetClassDic, sheetDataDic);
                 }
+                else if (varClass.Type == "list")
+                {
+                    string value = sheetData.AllData[i].RowDataDic[sheetData.AllName[j]];
+                    SetSplitClass(addItem, allSheetClassDic[varClass.ListSheetName], value);
+
+                }
+                else if (varClass.Type == "listStr" || varClass.Type == "listFloat"
+                           || varClass.Type == "listInt" || varClass.Type == "listBool")
+                {
+                    string value = sheetData.AllData[i].RowDataDic[sheetData.AllName[j]];
+                    SetSplitBaseClass(addItem, varClass, value);
+                }    
                 else
                 {
                     string value = sheetData.AllData[i].RowDataDic[sheetData.AllName[j]];
@@ -494,6 +506,96 @@ public class DataEditor
 
         //list 添加到objClass
         objClass.GetType().GetProperty(sheetClass.ParentVar.Name).SetValue(objClass, list);
+    }
+
+    /// <summary>
+    /// 自定义类List 赋值
+    /// </summary>
+    /// <param name="objClass"></param>
+    /// <param name="sheetClass"></param>
+    /// <param name="value"></param>
+    private static void SetSplitClass(object objClass, SheetClass sheetClass, string value)
+    {
+        object item = CreateClass(sheetClass.Name); // 只是为了得到变量类型
+        object list = CreateList(item.GetType());
+
+        if (string.IsNullOrEmpty(value))
+        {
+            Debug.Log("Excel里面自定义List的列里有空值！" + sheetClass.Name);
+            return;
+        }
+        else
+        {
+            //分隔符
+            string splitStr = sheetClass.ParentVar.SplitStr.Replace("\\n", "\n").Replace("\\r", "\r");
+            //分割数据
+            string[] rowArray = value.Split(new string[] { splitStr }, StringSplitOptions.None);
+            for (int i = 0; i < rowArray.Length; i++)
+            {
+                object addItem = CreateClass(sheetClass.Name);
+                string[] valueList = rowArray[i].Trim().Split(new string[] { sheetClass.SplitStr },
+                    StringSplitOptions.None);
+
+                for (int j = 0; j < valueList.Length; j++)
+                {
+                    SetValue(addItem.GetType().GetProperty(sheetClass.VarList[j].Name), addItem,
+                        valueList[j].Trim(), sheetClass.VarList[j].Type);
+                }
+
+                list.GetType().InvokeMember("Add", BindingFlags.Default | BindingFlags.InvokeMethod,
+                        null, list, new object[] { addItem });
+            }
+        }
+
+        objClass.GetType().GetProperty(sheetClass.ParentVar.Name).SetValue(objClass, list);
+    }
+
+    /// <summary>
+    /// 基础List赋值
+    /// </summary>
+    /// <param name="objClass"></param>
+    /// <param name="varClass"></param>
+    /// <param name="value"></param>
+    private static void SetSplitBaseClass(object objClass, VarClass varClass, string value)
+    {
+        Type type = null;
+        if(varClass.Type == "listStr")
+        {
+            type = typeof(string);
+        }
+        else if(varClass.Type == "listFloat")
+        {
+            type = typeof(float);
+        }
+        else if (varClass.Type == "listInt")
+        {
+            type = typeof(int);
+        }
+        else if (varClass.Type == "listBool")
+        {
+            type = typeof(bool);
+        }
+
+        object list = CreateList(type);
+        string[] rowArray = value.Split(new string[] { varClass.SplitStr }, StringSplitOptions.None);
+        for(int i=0;i< rowArray.Length; i++)
+        {
+            //去除前后空字符串
+            object addItem = rowArray[i].Trim();
+            try
+            {
+                list.GetType().InvokeMember("Add", BindingFlags.Default | BindingFlags.InvokeMethod,
+                    null, list, new object[] { addItem });
+            }
+            catch (Exception e)
+            {
+                Debug.Log(varClass.ListSheetName + " 里 " + varClass.Name + " 列表添加失败！具体数据是： " +
+                    addItem);
+            }
+           
+        }
+
+        objClass.GetType().GetProperty(varClass.Name).SetValue(objClass, list);
     }
 
     /// <summary>
@@ -572,8 +674,7 @@ public class DataEditor
                {
                     //创建 str 单元
                     ExcelWorksheet worksheet = package.Workbook.Worksheets.Add(str);
-                    //自动对齐
-                    worksheet.Cells.AutoFitColumns();
+         
                     //获取 str 字典里面所有数据
                     SheetData sheetData = sheetDataDic[str];
                     //遍历 sheet 表的列 ，并赋值
@@ -601,7 +702,9 @@ public class DataEditor
                             }
                         }
                     }
-               }
+                    //自动对齐
+                    worksheet.Cells.AutoFitColumns();
+                }
                 package.Save();
             }
         }

@@ -135,8 +135,8 @@ public class BuffBase
     public BuffEnum BuffType { get; set; }
 
     [XmlElement("AllString")]
-    public List<string> AllString { get; set; }   
-    
+    public List<string> AllString { get; set; }
+
     [XmlElement("AllBuffList")]
     public List<BuffTest> AllBuffList { get; set; }
 }
