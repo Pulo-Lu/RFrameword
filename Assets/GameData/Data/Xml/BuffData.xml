@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <BuffData xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <AllBuffList Id="1" Name="全BUFF0" OutLook="Assets/GameData/...0" Time="5.373677" BuffType="Ranshao">
     <AllString>测试0</AllString>
