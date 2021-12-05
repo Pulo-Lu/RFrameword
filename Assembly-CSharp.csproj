@@ -57,6 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\UGUI\Panel\MenuPanel.cs" />
+    <Compile Include="Assets\Scripts\Data\BuffData.cs" />
     <Compile Include="Assets\RealFram\ConfigFramework\ConfigManager.cs" />
     <Compile Include="Assets\Scripts\UGUI\Window\MenuUI.cs" />
     <Compile Include="Assets\Scripts\UGUI\Panel\LoadingPanel.cs" />
@@ -67,7 +68,6 @@
     <Compile Include="Assets\GameData\Modle\benghuai\AutoRotation.cs" />
     <Compile Include="Assets\Scripts\Game\GameStart.cs" />
     <Compile Include="Assets\RealFram\ConfigFramework\ExcelBase.cs" />
-    <Compile Include="Assets\Scripts\Data\BuffData.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\GameData\Shaders\Xray.shader" />

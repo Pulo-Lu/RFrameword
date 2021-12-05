@@ -375,10 +375,36 @@ public class DataEditor
 
                         for(int j = 0; j < sheetClass.VarList.Count; j++)
                         {
+                            //存入 变量名和变量类型
                             sheetData.AllName.Add(sheetClass.VarList[j].Name);
                             sheetData.AllType.Add(sheetClass.VarList[j].Type);
                         }
 
+                        //获取数据  //第一行为列名 n从1开始
+                        for (int n = 1; n < rowCount; n++) 
+                        {
+                            RowData rowData = new RowData();
+                            for(int m = 0; m < colCount; m++)
+                            {
+                                //获取单元格
+                                ExcelRange range = worksheet.Cells[n + 1, m + 1];
+                                string value = "";
+                                if (range.Value != null)
+                                {
+                                    //去除空格（前后空格）
+                                    value = range.Value.ToString().Trim().Replace(" ", "");
+                                }
+                                //去除空格（前后空格）
+                                string colValue = worksheet.Cells[1, m + 1].Value.ToString().Trim().Replace(" ", "");
+                                //获取rowData字典
+                                rowData.RowDataDic.Add(GetNameFormCol(sheetClass.VarList, colValue), value);
+                            }
+                            //每一行的数据填入 rowData
+                            sheetData.AllData.Add(rowData);
+                        }
+
+                        //根据sheet名填入 sheetData数据
+                        sheetDataDic.Add(worksheet.Name, sheetData);
                     }
 
                 }
@@ -389,11 +415,96 @@ public class DataEditor
             Debug.LogError(e);
             return;
         }
- 
 
-     
         //根据类的结构，创建类，并且给每个变量赋值（从excel里读出来的值）
+        //创建类
+        object objClass = CreateClass(className);
 
+        //最外层 KeyList
+        List<string> outKeyList = new List<string>();
+        foreach(string str in allSheetClassDic.Keys)
+        {
+            SheetClass sheetClass = allSheetClassDic[str];
+            //sheetClass深度为一  最外层
+            if (sheetClass.Depth == 1)
+            {
+                outKeyList.Add(str);
+            }
+        }
+
+        //递归
+        for(int i = 0; i < outKeyList.Count; i++)
+        {
+            ReadDataToClass(objClass, allSheetClassDic[outKeyList[i]], sheetDataDic[outKeyList[i]], allSheetClassDic, sheetDataDic);
+        }
+
+        //xml 序列化
+        BinarySerializeOpt.Xmlserialize(XmlPath + xmlName, objClass);
+        Debug.Log(excelName + "表导入Unity完成！");
+        AssetDatabase.Refresh();
+    }
+
+    /// <summary>
+    /// 读取Data数据到类
+    /// </summary>
+    /// <param name="objClass"></param>
+    /// <param name="sheetClass"></param>
+    /// <param name="sheetData"></param>
+    /// <param name="allSheetClassDic"></param>
+    /// <param name="sheetDataDic"></param>
+    private static void ReadDataToClass(object objClass, SheetClass sheetClass, SheetData sheetData,
+        Dictionary<string, SheetClass> allSheetClassDic, Dictionary<string, SheetData> sheetDataDic)
+    {
+        object item = CreateClass(sheetClass.Name); // 只是为了得到变量类型
+        object list = CreateList(item.GetType());
+
+        for (int i = 0; i < sheetData.AllData.Count; i++)
+        {
+            object addItem = CreateClass(sheetClass.Name);
+            for(int j = 0; j < sheetClass.VarList.Count; j++)
+            {
+                VarClass varClass = sheetClass.VarList[j];
+                if(varClass.Type == "list")
+                {
+                    //递归
+                    ReadDataToClass(addItem, allSheetClassDic[varClass.ListSheetName],
+                        sheetDataDic[varClass.ListSheetName], allSheetClassDic, sheetDataDic);
+                }
+                else
+                {
+                    string value = sheetData.AllData[i].RowDataDic[sheetData.AllName[j]];
+                    //默认值处理
+                    if(string.IsNullOrEmpty(value) && !string.IsNullOrEmpty(varClass.DeafultValue))
+                    {
+                        value = varClass.DeafultValue;
+                    }
+                    //赋值
+                    SetValue(addItem.GetType().GetProperty(sheetData.AllName[j]), addItem, value, sheetData.AllType[j]);
+                }
+            }
+            //反射调用Add方法添加到List
+            list.GetType().InvokeMember("Add", BindingFlags.Default | BindingFlags.InvokeMethod,
+                null, list, new object[] { addItem });
+        }
+
+        //list 添加到objClass
+        objClass.GetType().GetProperty(sheetClass.ParentVar.Name).SetValue(objClass, list);
+    }
+
+    /// <summary>
+    /// 根据列名获取变量名
+    /// </summary>
+    /// <param name="varlist"></param>
+    /// <param name="col"></param>
+    /// <returns></returns>
+    private static string GetNameFormCol(List<VarClass> varlist, string col)
+    {
+        foreach(VarClass varClass in varlist)
+        {
+            if (varClass.Col == col)
+                return varClass.Name;
+        }
+        return null;
     }
 
     /// <summary>
@@ -779,7 +890,7 @@ public class DataEditor
                     Name = xe.GetAttribute("name"),
                     Type = xe.GetAttribute("type"),
                     Col = xe.GetAttribute("col"),
-                    DeafultValue = xe.GetAttribute("defaultVaule"),
+                    DeafultValue = xe.GetAttribute("defaultValue"),
                     Foregin = xe.GetAttribute("foregin"),
                     SplitStr = xe.GetAttribute("split"),
                 };
@@ -815,7 +926,7 @@ public class DataEditor
                                 Name = insideXe.GetAttribute("name"),
                                 Type = insideXe.GetAttribute("type"),
                                 Col = insideXe.GetAttribute("col"),
-                                DeafultValue = insideXe.GetAttribute("defaultVaule"),
+                                DeafultValue = insideXe.GetAttribute("defaultValue"),
                                 Foregin = insideXe.GetAttribute("foregin"),
                                 SplitStr = insideXe.GetAttribute("split"),
                             };
