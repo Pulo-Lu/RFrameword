@@ -478,6 +478,11 @@ public class DataEditor
                     {
                         value = varClass.DeafultValue;
                     }
+                    if (string.IsNullOrEmpty(value))
+                    {
+                        Debug.LogError("表格中有空数据或者Reg文件未配置defaultValue！！!" + sheetData.AllName[j]);
+                        continue;
+                    }
                     //赋值
                     SetValue(addItem.GetType().GetProperty(sheetData.AllName[j]), addItem, value, sheetData.AllType[j]);
                 }
