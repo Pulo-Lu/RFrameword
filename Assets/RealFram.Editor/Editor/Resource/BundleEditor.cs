@@ -47,8 +47,6 @@ public class BundleEditor
     private static List<string> m_ConfigFil = new List<string>();
 
 
-
-
     /// <summary>
     /// 基于Assets序列化生成编辑器打包配置表 方法打AB包
     /// </summary>
@@ -299,8 +297,6 @@ public class BundleEditor
         SetABName("assetbundleconfig", ABBYTEPATH);
     
     }
-
-
 
     // 删除无用AB包（改名或者没有使用）
     static void DeleteAb()
