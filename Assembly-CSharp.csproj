@@ -674,21 +674,21 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="UIManager.csproj">
+      <Project>{2B0453FA-9BBC-43A3-982F-C26BAE460D99}</Project>
+      <Name>UIManager</Name>
+    </ProjectReference>
     <ProjectReference Include="Test.csproj">
       <Project>{28195051-E933-F751-077A-18F9A1068C3D}</Project>
       <Name>Test</Name>
-    </ProjectReference>
-    <ProjectReference Include="Base.csproj">
-      <Project>{2F864F69-512E-AB93-56BA-01FBEFF16423}</Project>
-      <Name>Base</Name>
     </ProjectReference>
     <ProjectReference Include="Resource.csproj">
       <Project>{3B5070D1-CC32-4C4C-162F-20E8BF51908C}</Project>
       <Name>Resource</Name>
     </ProjectReference>
-    <ProjectReference Include="UIManager.csproj">
-      <Project>{2B0453FA-9BBC-43A3-982F-C26BAE460D99}</Project>
-      <Name>UIManager</Name>
+    <ProjectReference Include="Base.csproj">
+      <Project>{2F864F69-512E-AB93-56BA-01FBEFF16423}</Project>
+      <Name>Base</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

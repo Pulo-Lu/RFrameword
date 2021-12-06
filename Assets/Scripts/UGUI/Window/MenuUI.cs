@@ -14,12 +14,14 @@ public class MenuUI : Window
         AddButtonListener(m_MainPanel.m_LoadButton, OnClickLoad);   
         AddButtonListener(m_MainPanel.m_ExitButton, OnClickExit);
 
+        //ObjectManager.Instance.InstantiateObject("Assets/GameData/Prefabs/Attack.prefab");
+
         ResourceManager.Instance.AsyncLoadResource("Assets/GameData/UGUI/test1.png", OnLoadSpriteTest1, LoadResPriority.RES_MIDDLE, true);
         ResourceManager.Instance.AsyncLoadResource("Assets/GameData/UGUI/test3.png", OnLoadSpriteTest3, LoadResPriority.RES_HIGHT, true);
 
         ResourceManager.Instance.AsyncLoadResource("Assets/GameData/UGUI/test2.png", OnLoadSpriteTest2, LoadResPriority.RES_HIGHT, true);
 
-        LoadMonsterData();
+        //LoadMonsterData();
 
 
     }

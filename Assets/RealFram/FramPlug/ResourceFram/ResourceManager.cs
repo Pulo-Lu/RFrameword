@@ -632,11 +632,14 @@ public class ResourceManager : Singleton<ResourceManager>
 
         if(item.m_Obj != null)
         {
-#if UNITY_EDITOR
-            Resources.UnloadUnusedAssets();
-#endif
             item.m_Obj = null;
 
+#if UNITY_EDITOR
+            Resources.UnloadUnusedAssets();
+
+            //对引用进行了释放，但是还存在在编辑器内存
+            //Resources.UnloadAsset(item.m_Obj);
+#endif
         }
 
     }
