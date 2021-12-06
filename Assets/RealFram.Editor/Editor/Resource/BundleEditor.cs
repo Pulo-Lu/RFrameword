@@ -55,6 +55,9 @@ public class BundleEditor
     [MenuItem("Tools/打包")]
     public static void Build()
     {
+        //打包前将Xml转成二进制
+        DataEditor.AllXmlToBinary();
+
         m_ConfigFil.Clear();
         m_AllFileAB.Clear();
         m_AllFileDir.Clear();      
