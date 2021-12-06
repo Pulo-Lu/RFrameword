@@ -28,14 +28,18 @@ public class GameStart : MonoSingleton<GameStart>
         
         RegisterUI();
 
-        GameMapManager.Instance.Init(this);
-        GameMapManager.Instance.LoadScene(ConStr.MENUSCNEN);
+        //GameMapManager.Instance.Init(this);
+        //加载场景
+        //GameMapManager.Instance.LoadScene(ConStr.MENUSCNEN);
     }
 
+    /// <summary>
+    /// 注册UI窗口
+    /// </summary>
     void RegisterUI()
     {
-        UIManager.Instance.Register<MenuUI>(ConStr.MENUPANEL);
-        UIManager.Instance.Register<LoadingUI>(ConStr.LOADINGPANEL);
+        //UIManager.Instance.Register<MenuUI>(ConStr.MENUPANEL);
+        //UIManager.Instance.Register<LoadingUI>(ConStr.LOADINGPANEL);
     }
 
     /// <summary>
@@ -43,8 +47,8 @@ public class GameStart : MonoSingleton<GameStart>
     /// </summary>
     void LoadConfiger()
     {
-        ConfigManager.Instance.LoadData<MonsterData>(CFG.TABLE_MONSTER);
-        ConfigManager.Instance.LoadData<BuffData>(CFG.TABLE_BUFF);
+        //ConfigManager.Instance.LoadData<MonsterData>(CFG.TABLE_MONSTER);
+        //ConfigManager.Instance.LoadData<BuffData>(CFG.TABLE_BUFF);
     }
 
     private void Update()

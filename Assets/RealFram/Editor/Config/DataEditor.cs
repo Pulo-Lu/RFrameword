@@ -11,9 +11,9 @@ using System.ComponentModel;
 
 public class DataEditor
 {
-    public static string XmlPath = "Assets/GameData/Data/Xml/";
-    public static string BinaryPath = "Assets/GameData/Data/Binary/";
-    public static string ScriptsPath = "Assets/Scripts/Data/";
+    public static string XmlPath = RealConfig.GetRealFram().m_XmlPath;
+    public static string BinaryPath = RealConfig.GetRealFram().m_BinaryPath;
+    public static string ScriptsPath = RealConfig.GetRealFram().m_ScriptsPath;
 
     public static string ExcelPath = Application.dataPath + "/../Data/Excel/";
     public static string RegPath = Application.dataPath + "/../Data/Reg/";
@@ -630,6 +630,7 @@ public class DataEditor
             }
             catch (Exception e)
             {
+                Debug.Log(e);
                 Debug.Log(varClass.ListSheetName + " 里 " + varClass.Name + " 列表添加失败！具体数据是： " +
                     addItem);
             }

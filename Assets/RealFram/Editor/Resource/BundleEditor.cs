@@ -29,9 +29,9 @@ public class BundleEditor
     //AB包位置
     private static string m_BundleTargetPath = Application.dataPath + "/../AssetBundle/" + EditorUserBuildSettings.activeBuildTarget.ToString();
 
-    private static string ABCONFIGPATH = "Assets/RealFram.Editor/Editor/Resource/ABConfig.asset";
+    private static string ABCONFIGPATH = "Assets/RealFram/Editor/Resource/ABConfig.asset";
 
-    private static string ABBYTEPATH = "Assets/GameData/Data/ABData/AssetBundleConfig.bytes";
+    private static string ABBYTEPATH = RealConfig.GetRealFram().m_ABBytePath;
 
 
     //Key是ab包名，value是路径，是所有文件夹ab包dic
@@ -322,6 +322,10 @@ public class BundleEditor
                 if (File.Exists(files[i].FullName))
                 {
                     File.Delete(files[i].FullName);
+                }
+                if (File.Exists(files[i].FullName + ".manifest"))
+                {
+                    File.Delete(files[i].FullName + ".manifest");
                 }
             }
         }

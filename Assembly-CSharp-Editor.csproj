@@ -56,13 +56,15 @@
     <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio Tools for Unity\16.0\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\RealFram.Editor\Editor\Resource\ABConfig.cs" />
-    <Compile Include="Assets\RealFram.Editor\Editor\Resource\BuildTool.cs" />
-    <Compile Include="Assets\RealFram.Editor\Editor\Config\DataEditor.cs" />
-    <Compile Include="Assets\RealFram.Editor\Editor\Resource\BundleEditor.cs" />
-    <Compile Include="Assets\RealFram.Editor\Editor\Resource\OfflineDataEditor.cs" />
+    <Compile Include="Assets\RealFram\Editor\Resource\ABConfig.cs" />
+    <Compile Include="Assets\RealFram\Editor\Resource\BuildTool.cs" />
+    <Compile Include="Assets\RealFram\Editor\Config\DataEditor.cs" />
+    <Compile Include="Assets\RealFram\Editor\Resource\BundleEditor.cs" />
+    <Compile Include="Assets\RealFram\Editor\Resource\OfflineDataEditor.cs" />
+    <Compile Include="Assets\RealFram\Editor\RealFramConfig.cs" />
   </ItemGroup>
   <ItemGroup>
+     <None Include="Assets\RealFram\FramPlug\Plugins\Editor\EPPlus.dll" />
     <Reference Include="UnityEngine">
       <HintPath>D:\Unity2019\2020.3.0f1c1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
     </Reference>
@@ -298,7 +300,7 @@
       <HintPath>C:\Program Files (x86)\Microsoft Visual Studio Tools for Unity\16.0\Editor\SyntaxTree.VisualStudio.Unity.Bridge.dll</HintPath>
     </Reference>
     <Reference Include="EPPlus">
-      <HintPath>Assets\Plugins\Editor\EPPlus.dll</HintPath>
+      <HintPath>Assets\RealFram\FramPlug\Plugins\Editor\EPPlus.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework">
       <HintPath>Library\PackageCache\com.unity.ext.nunit@1.0.6\net35\unity-custom\nunit.framework.dll</HintPath>
@@ -687,21 +689,21 @@
       <Project>{65AEADD1-7B31-4B6E-24DF-8821C381B480}</Project>
       <Name>Assembly-CSharp</Name>
     </ProjectReference>
-    <ProjectReference Include="UIManager.csproj">
-      <Project>{2B0453FA-9BBC-43A3-982F-C26BAE460D99}</Project>
-      <Name>UIManager</Name>
-    </ProjectReference>
     <ProjectReference Include="Test.csproj">
       <Project>{28195051-E933-F751-077A-18F9A1068C3D}</Project>
       <Name>Test</Name>
+    </ProjectReference>
+    <ProjectReference Include="Base.csproj">
+      <Project>{2F864F69-512E-AB93-56BA-01FBEFF16423}</Project>
+      <Name>Base</Name>
     </ProjectReference>
     <ProjectReference Include="Resource.csproj">
       <Project>{3B5070D1-CC32-4C4C-162F-20E8BF51908C}</Project>
       <Name>Resource</Name>
     </ProjectReference>
-    <ProjectReference Include="Base.csproj">
-      <Project>{2F864F69-512E-AB93-56BA-01FBEFF16423}</Project>
-      <Name>Base</Name>
+    <ProjectReference Include="UIManager.csproj">
+      <Project>{2B0453FA-9BBC-43A3-982F-C26BAE460D99}</Project>
+      <Name>UIManager</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

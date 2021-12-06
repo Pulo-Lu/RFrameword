@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 2651508365
+CRC: 1519628141
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 5d0aa1801ec5d430c90f64322a59c688
+    Hash: 4159453f08880169f0d66daf3bbb277d
   TypeTreeHash:
     serializedVersion: 2
     Hash: 5ad585dd02dfb5016c0dad519eab8f49
@@ -13,5 +13,6 @@ ClassTypes:
   Script: {instanceID: 0}
 SerializeReferenceClassIdentifiers: []
 Assets:
-- Assets/GameData/Data/ABData/AssetBundleConfig.bytes
+- Assets/GameData/Data/Binary/BuffData.bytes
+- Assets/GameData/Data/Binary/MonsterData.bytes
 Dependencies: []

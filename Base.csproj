@@ -56,12 +56,12 @@
     <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio Tools for Unity\16.0\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\RealFram\BaseFramwork\MonoSingleton.cs" />
-    <Compile Include="Assets\RealFram\BaseFramwork\Singleton.cs" />
-    <Compile Include="Assets\RealFram\BaseFramwork\ConStr.cs" />
+    <Compile Include="Assets\RealFram\FramPlug\BaseFram\MonoSingleton.cs" />
+    <Compile Include="Assets\RealFram\FramPlug\BaseFram\Singleton.cs" />
+    <Compile Include="Assets\RealFram\FramPlug\BaseFram\ConStr.cs" />
   </ItemGroup>
   <ItemGroup>
-     <None Include="Assets\RealFram\BaseFramwork\Base.asmdef" />
+     <None Include="Assets\RealFram\FramPlug\BaseFram\Base.asmdef" />
     <Reference Include="UnityEngine">
       <HintPath>D:\Unity2019\2020.3.0f1c1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
     </Reference>
@@ -297,7 +297,7 @@
       <HintPath>C:\Program Files (x86)\Microsoft Visual Studio Tools for Unity\16.0\Editor\SyntaxTree.VisualStudio.Unity.Bridge.dll</HintPath>
     </Reference>
     <Reference Include="EPPlus">
-      <HintPath>Assets\Plugins\Editor\EPPlus.dll</HintPath>
+      <HintPath>Assets\RealFram\FramPlug\Plugins\Editor\EPPlus.dll</HintPath>
     </Reference>
     <Reference Include="netstandard">
       <HintPath>D:\Unity2019\2020.3.0f1c1\Editor\Data\NetStandard\ref\2.0.0\netstandard.dll</HintPath>

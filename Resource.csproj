@@ -56,18 +56,18 @@
     <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio Tools for Unity\16.0\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\RealFram\ResourceFramwork\AssetBundleManager.cs" />
-    <Compile Include="Assets\RealFram\ResourceFramwork\AssetBundleConfig.cs" />
-    <Compile Include="Assets\RealFram\ResourceFramwork\OfflineData\EffectOfflineData.cs" />
-    <Compile Include="Assets\RealFram\ResourceFramwork\ResourceManager.cs" />
-    <Compile Include="Assets\RealFram\ResourceFramwork\ObjectManager.cs" />
-    <Compile Include="Assets\RealFram\ResourceFramwork\ClassObjectPool.cs" />
-    <Compile Include="Assets\RealFram\ResourceFramwork\OfflineData\OfflineData.cs" />
-    <Compile Include="Assets\RealFram\ResourceFramwork\OfflineData\UIOfflineData.cs" />
-    <Compile Include="Assets\RealFram\ResourceFramwork\CRC32.cs" />
+    <Compile Include="Assets\RealFram\FramPlug\ResourceFram\AssetBundleManager.cs" />
+    <Compile Include="Assets\RealFram\FramPlug\ResourceFram\AssetBundleConfig.cs" />
+    <Compile Include="Assets\RealFram\FramPlug\ResourceFram\OfflineData\EffectOfflineData.cs" />
+    <Compile Include="Assets\RealFram\FramPlug\ResourceFram\ResourceManager.cs" />
+    <Compile Include="Assets\RealFram\FramPlug\ResourceFram\ObjectManager.cs" />
+    <Compile Include="Assets\RealFram\FramPlug\ResourceFram\ClassObjectPool.cs" />
+    <Compile Include="Assets\RealFram\FramPlug\ResourceFram\OfflineData\OfflineData.cs" />
+    <Compile Include="Assets\RealFram\FramPlug\ResourceFram\OfflineData\UIOfflineData.cs" />
+    <Compile Include="Assets\RealFram\FramPlug\ResourceFram\CRC32.cs" />
   </ItemGroup>
   <ItemGroup>
-     <None Include="Assets\RealFram\ResourceFramwork\Resource.asmdef" />
+     <None Include="Assets\RealFram\FramPlug\ResourceFram\Resource.asmdef" />
     <Reference Include="UnityEngine">
       <HintPath>D:\Unity2019\2020.3.0f1c1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
     </Reference>
@@ -303,7 +303,7 @@
       <HintPath>C:\Program Files (x86)\Microsoft Visual Studio Tools for Unity\16.0\Editor\SyntaxTree.VisualStudio.Unity.Bridge.dll</HintPath>
     </Reference>
     <Reference Include="EPPlus">
-      <HintPath>Assets\Plugins\Editor\EPPlus.dll</HintPath>
+      <HintPath>Assets\RealFram\FramPlug\Plugins\Editor\EPPlus.dll</HintPath>
     </Reference>
     <Reference Include="netstandard">
       <HintPath>D:\Unity2019\2020.3.0f1c1\Editor\Data\NetStandard\ref\2.0.0\netstandard.dll</HintPath>

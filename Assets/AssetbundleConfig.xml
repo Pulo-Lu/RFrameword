@@ -3,7 +3,8 @@
   <ABList Path="Assets/GameData/Prefabs/Attack.prefab" Crc="1661645201" ABName="attack" AssetName="Attack.prefab">
     <ABDependce>shader</ABDependce>
   </ABList>
-  <ABList Path="Assets/GameData/Prefabs/GameStart.prefab" Crc="2067334258" ABName="gamestart" AssetName="GameStart.prefab" />
+  <ABList Path="Assets/GameData/Data/Binary/BuffData.bytes" Crc="1740262205" ABName="bytes" AssetName="BuffData.bytes" />
+  <ABList Path="Assets/GameData/Data/Binary/MonsterData.bytes" Crc="1110720144" ABName="bytes" AssetName="MonsterData.bytes" />
   <ABList Path="Assets/GameData/Prefabs/UGUI/Panel/LoadingPanel.prefab" Crc="155217535" ABName="loadingpanel" AssetName="LoadingPanel.prefab" />
   <ABList Path="Assets/GameData/Prefabs/UGUI/Panel/MenuPanel.prefab" Crc="2521868572" ABName="menupanel" AssetName="MenuPanel.prefab" />
   <ABList Path="Assets/GameData/Prefabs/Effect/ParticleTest1.prefab" Crc="1008866145" ABName="particletest1" AssetName="ParticleTest1.prefab" />

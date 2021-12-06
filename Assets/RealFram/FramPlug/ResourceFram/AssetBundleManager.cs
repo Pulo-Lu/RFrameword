@@ -7,12 +7,23 @@ using UnityEditor;
 
 public class AssetBundleManager: Singleton<AssetBundleManager>
 {
+    protected string m_ABConfigABName = "assetbundleconfig";
+
     //资源关系依赖配置表，可以根据Crc来找到对应的资源块
     protected Dictionary<uint, ResouceItem> m_ResouceItemDic = new Dictionary<uint, ResouceItem>();
     //存储已加载的AB包，Key为crc
     protected Dictionary<uint, AssetBundleItem> m_AssetBundleItemDic = new Dictionary<uint, AssetBundleItem>();
     //AssetBundleItem 类对象池
     protected ClassObjectPool<AssetBundleItem> m_AssetBundleItemPool = ObjectManager.Instance.GetOrCreatClassPool<AssetBundleItem>(500);
+
+    //加载路径 //热更可能会用到
+    protected string ABLoadPath
+    {
+        get
+        {
+            return Application.streamingAssetsPath + "/";
+        }
+    }
 
     /// <summary>
     /// 加载AB配置表
@@ -24,9 +35,10 @@ public class AssetBundleManager: Singleton<AssetBundleManager>
             return false;
 
         m_ResouceItemDic.Clear();
-        string configPath = Application.dataPath + "/../AssetBundle/" + EditorUserBuildSettings.activeBuildTarget.ToString() + "/assetbundleconfig";
+        string configPath = ABLoadPath + m_ABConfigABName;
+        //string configPath = Application.dataPath + "/../AssetBundle/" + EditorUserBuildSettings.activeBuildTarget.ToString() + "/" + m_ABConfigABName;
         AssetBundle configAB = AssetBundle.LoadFromFile(configPath);
-        TextAsset textAsset = configAB.LoadAsset<TextAsset>("assetbundleconfig");
+        TextAsset textAsset = configAB.LoadAsset<TextAsset>(m_ABConfigABName);
 
         if(textAsset == null)
         {
@@ -107,7 +119,7 @@ public class AssetBundleManager: Singleton<AssetBundleManager>
         if(!m_AssetBundleItemDic.TryGetValue(crc,out item))
         {
             AssetBundle assetBundle = null;
-            string fullPath = Application.streamingAssetsPath + "/" + name;
+            string fullPath = ABLoadPath + name;
             if (File.Exists(fullPath))
             {
                 assetBundle = AssetBundle.LoadFromFile(fullPath);
