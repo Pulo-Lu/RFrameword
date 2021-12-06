@@ -384,7 +384,17 @@ public class DataEditor
                         for (int n = 1; n < rowCount; n++) 
                         {
                             RowData rowData = new RowData();
-                            for(int m = 0; m < colCount; m++)
+
+                            int m = 0;
+                            if (string.IsNullOrEmpty(sheetClass.SplitStr) && 
+                                sheetClass.ParentVar != null &&
+                                !string.IsNullOrEmpty(sheetClass.ParentVar.Foregin)) 
+                            {
+                                rowData.ParentValue = worksheet.Cells[n + 1, 1].Value.ToString().Trim();
+                                m = 1;
+                            }
+
+                            for (; m < colCount; m++)
                             {
                                 //获取单元格
                                 ExcelRange range = worksheet.Cells[n + 1, m + 1];
@@ -396,7 +406,7 @@ public class DataEditor
                                 }
                                 //去除空格（前后空格）
                                 string colValue = worksheet.Cells[1, m + 1].Value.ToString().Trim().Replace(" ", "");
-                                //获取rowData字典
+                                //rowData字典
                                 rowData.RowDataDic.Add(GetNameFormCol(sheetClass.VarList, colValue), value);
                             }
                             //每一行的数据填入 rowData
@@ -435,7 +445,7 @@ public class DataEditor
         //递归
         for(int i = 0; i < outKeyList.Count; i++)
         {
-            ReadDataToClass(objClass, allSheetClassDic[outKeyList[i]], sheetDataDic[outKeyList[i]], allSheetClassDic, sheetDataDic);
+            ReadDataToClass(objClass, allSheetClassDic[outKeyList[i]], sheetDataDic[outKeyList[i]], allSheetClassDic, sheetDataDic, null);
         }
 
         //xml 序列化
@@ -453,13 +463,19 @@ public class DataEditor
     /// <param name="allSheetClassDic"></param>
     /// <param name="sheetDataDic"></param>
     private static void ReadDataToClass(object objClass, SheetClass sheetClass, SheetData sheetData,
-        Dictionary<string, SheetClass> allSheetClassDic, Dictionary<string, SheetData> sheetDataDic)
+        Dictionary<string, SheetClass> allSheetClassDic, Dictionary<string, SheetData> sheetDataDic, object keyValue)
     {
         object item = CreateClass(sheetClass.Name); // 只是为了得到变量类型
         object list = CreateList(item.GetType());
 
         for (int i = 0; i < sheetData.AllData.Count; i++)
         {
+            if (keyValue != null && !string.IsNullOrEmpty(sheetData.AllData[i].ParentValue))
+            {
+                if (sheetData.AllData[i].ParentValue != keyValue.ToString())
+                    continue;
+            }
+
             object addItem = CreateClass(sheetClass.Name);
             for(int j = 0; j < sheetClass.VarList.Count; j++)
             {
@@ -468,7 +484,8 @@ public class DataEditor
                 {
                     //递归
                     ReadDataToClass(addItem, allSheetClassDic[varClass.ListSheetName],
-                        sheetDataDic[varClass.ListSheetName], allSheetClassDic, sheetDataDic);
+                        sheetDataDic[varClass.ListSheetName], allSheetClassDic, sheetDataDic, GetMemberValue(addItem,
+                        sheetClass.MainKey));
                 }
                 else if (varClass.Type == "list")
                 {
@@ -483,7 +500,7 @@ public class DataEditor
                     SetSplitBaseClass(addItem, varClass, value);
                 }    
                 else
-                {
+                {                
                     string value = sheetData.AllData[i].RowDataDic[sheetData.AllName[j]];
                     //默认值处理
                     if(string.IsNullOrEmpty(value) && !string.IsNullOrEmpty(varClass.DeafultValue))
@@ -1365,6 +1382,7 @@ public class SheetData
 
 public class RowData
 {
+    public string ParentValue = "";
     //key: 列名 value:值
     public Dictionary<string, string> RowDataDic = new Dictionary<string, string>();
 }
