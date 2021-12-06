@@ -285,12 +285,17 @@ public class ResourceManager : Singleton<ResourceManager>
         if (!m_LoadFormAssetBundle)
         {
             item = AssetBundleManager.Instance.FindResouceItem(crc);
-            if (item.m_Obj != null)
+            if (item != null && item.m_Obj != null)
             {
-                obj = item.m_Obj;
+                obj = item.m_Obj as Object;
             }
             else
             {
+                if (item == null)
+                {
+                    item = new ResouceItem();
+                    item.m_Crc = crc;
+                }
                 obj = LoadAssetByEditor<Object>(path);
             }
         }
