@@ -472,6 +472,8 @@ public class DataEditor
 
         //xml 序列化
         BinarySerializeOpt.Xmlserialize(XmlPath + xmlName, objClass);
+        //二进制序列化
+        //BinarySerializeOpt.BinarySerialize(BinaryPath + className + ".bytes", objClass);
         Debug.Log(excelName + "表导入Unity完成！");
         AssetDatabase.Refresh();
     }

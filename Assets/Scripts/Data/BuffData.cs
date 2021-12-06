@@ -6,6 +6,7 @@ using System.Xml.Serialization;
 [System.Serializable]
 public class BuffData : ExcelBase
 {
+#if UNITY_EDITOR
     /// <summary>
     /// 编辑器下初始类转xml
     /// </summary>
@@ -59,6 +60,7 @@ public class BuffData : ExcelBase
             MonsterBuffList.Add(buff);
         }
     }
+#endif
 
     /// <summary>
     /// 运行时：数据初始化

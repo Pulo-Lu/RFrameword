@@ -6,6 +6,7 @@ using System.Xml.Serialization;
 [System.Serializable]
 public class MonsterData : ExcelBase
 {
+#if UNITY_EDITOR
     /// <summary>
     /// 编辑器下初始类转xml
     /// </summary>
@@ -24,7 +25,7 @@ public class MonsterData : ExcelBase
             AllMonster.Add(monster);
         }
     }
-
+#endif
     /// <summary>
     /// 运行时：数据初始化
     /// </summary>
