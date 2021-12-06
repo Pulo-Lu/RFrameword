@@ -17,8 +17,23 @@ public class MenuUI : Window
         ResourceManager.Instance.AsyncLoadResource("Assets/GameData/UGUI/test1.png", OnLoadSpriteTest1, LoadResPriority.RES_MIDDLE, true);
         ResourceManager.Instance.AsyncLoadResource("Assets/GameData/UGUI/test3.png", OnLoadSpriteTest3, LoadResPriority.RES_HIGHT, true);
 
-        ResourceManager.Instance.AsyncLoadResource("Assets/GameData/UGUI/test2.png", OnLoadSpriteTest2, LoadResPriority.RES_HIGHT, true);   
-   
+        ResourceManager.Instance.AsyncLoadResource("Assets/GameData/UGUI/test2.png", OnLoadSpriteTest2, LoadResPriority.RES_HIGHT, true);
+
+        LoadMonsterData();
+
+
+    }
+
+
+    void LoadMonsterData()
+    {
+        MonsterData monsterData = ConfigManager.Instance.FindData<MonsterData>(CFG.TABLE_MONSTER);
+
+        for(int i = 0; i < monsterData.AllMonster.Count; i++)
+        {
+            Debug.Log(string.Format("ID:{0} 名字:{1} 预置路径:{2} 等级:{3} 稀有度:{4} 高度:{5}", monsterData.AllMonster[i].Id, monsterData.AllMonster[i].Name,
+                 monsterData.AllMonster[i].OutLook, monsterData.AllMonster[i].Level, monsterData.AllMonster[i].Rare, monsterData.AllMonster[i].Height));
+        }
     }
 
     void OnLoadSpriteTest1(string path, Object obj, object param1 = null, object param2 = null, object param3 = null)
