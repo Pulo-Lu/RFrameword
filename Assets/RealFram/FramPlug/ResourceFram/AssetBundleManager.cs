@@ -31,9 +31,10 @@ public class AssetBundleManager: Singleton<AssetBundleManager>
     /// <returns></returns>
     public bool LoadAssetBundleConfig()
     {
+#if UNITY_EDITOR
         if (!ResourceManager.Instance.m_LoadFormAssetBundle)
             return false;
-
+#endif
         m_ResouceItemDic.Clear();
         string configPath = ABLoadPath + m_ABConfigABName;
         //string configPath = Application.dataPath + "/../AssetBundle/" + EditorUserBuildSettings.activeBuildTarget.ToString() + "/" + m_ABConfigABName;
@@ -120,10 +121,8 @@ public class AssetBundleManager: Singleton<AssetBundleManager>
         {
             AssetBundle assetBundle = null;
             string fullPath = ABLoadPath + name;
-            if (File.Exists(fullPath))
-            {
-                assetBundle = AssetBundle.LoadFromFile(fullPath);
-            }
+
+            assetBundle = AssetBundle.LoadFromFile(fullPath);
 
             if (assetBundle == null)
             {
