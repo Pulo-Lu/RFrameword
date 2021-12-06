@@ -8,8 +8,6 @@ public class RealFramConfig : ScriptableObject
 {
     //打包时生成AB包配置表的二进制路径
     public string m_ABBytePath;
-    //打包的默认名称
-    public string m_AppName;
     //xml文件夹路径
     public string m_XmlPath;
     //二进制文件夹路径
@@ -24,8 +22,6 @@ public class RealFramConfigInspector : Editor
 
     public SerializedProperty m_ABBytePath;
 
-    public SerializedProperty m_AppName;
-
     public SerializedProperty m_XmlPath;
 
     public SerializedProperty m_BinaryPath;
@@ -35,7 +31,6 @@ public class RealFramConfigInspector : Editor
     private void OnEnable()
     {
         m_ABBytePath = serializedObject.FindProperty("m_ABBytePath");
-        m_AppName = serializedObject.FindProperty("m_AppName");
         m_XmlPath = serializedObject.FindProperty("m_XmlPath");
         m_BinaryPath = serializedObject.FindProperty("m_BinaryPath");
         m_ScriptsPath = serializedObject.FindProperty("m_ScriptsPath");
@@ -45,9 +40,6 @@ public class RealFramConfigInspector : Editor
     {
         serializedObject.Update();
         EditorGUILayout.PropertyField(m_ABBytePath, new GUIContent("AB包二进制路径"));
-        EditorGUILayout.Space(5);
-
-        EditorGUILayout.PropertyField(m_AppName, new GUIContent("打包出来的程序名称"));
         EditorGUILayout.Space(5);
 
         EditorGUILayout.PropertyField(m_XmlPath, new GUIContent("Xml路径"));

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: RealFramConfig
   m_EditorClassIdentifier: 
   m_ABBytePath: Assets/GameData/Data/ABData/AssetBundleConfig.bytes
-  m_AppName: ReaFram
+  m_AppName: 
   m_XmlPath: Assets/GameData/Data/Xml/
   m_BinaryPath: Assets/GameData/Data/Binary/
   m_ScriptsPath: Assets/Scripts/Data/

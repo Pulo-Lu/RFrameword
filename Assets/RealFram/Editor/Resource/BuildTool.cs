@@ -7,7 +7,7 @@ using System.IO;
 
 public class BuildTool
 {
-    private static string m_AppName = RealConfig.GetRealFram().m_AppName;
+    private static string m_AppName = PlayerSettings.productName; //RealConfig.GetRealFram().m_AppName;
 
     public static string m_AndroidPath = Application.dataPath + "/../BuildTarget/Android/";
     public static string m_IOSPath = Application.dataPath + "/../BuildTarget/IOS/";
