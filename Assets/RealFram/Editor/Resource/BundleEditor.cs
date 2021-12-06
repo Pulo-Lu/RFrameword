@@ -202,10 +202,8 @@ public class BundleEditor
                     continue;
                 }
                 Debug.Log("此AB包： " + allBundles[i] + " 下面包含的资源文件路径： " + allBundlePath[j]);
-                if (ValidPath(allBundlePath[j]))
-                {
-                    resPathDic.Add(allBundlePath[j], allBundles[i]);
-                }
+
+                resPathDic.Add(allBundlePath[j], allBundles[i]);    
             }
         }
 
@@ -240,6 +238,9 @@ public class BundleEditor
         config.ABList = new List<ABBase>();
         foreach (string path in resPathDic.Keys)
         {
+            if (!ValidPath(path))
+                continue;
+
             ABBase abBase = new ABBase();
             abBase.Path = path;
             abBase.Crc = Crc32.GetCrc32(path);
