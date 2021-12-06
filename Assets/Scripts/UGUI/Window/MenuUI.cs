@@ -69,7 +69,11 @@ public class MenuUI : Window
 
     public override void OnUpdate()
     {
-    
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            ResourceManager.Instance.ReleaseResrouce(m_MainPanel.m_Test1.sprite, true);
+            m_MainPanel.m_Test1.sprite = null;
+        }
     }
 
     void OnClickStart()

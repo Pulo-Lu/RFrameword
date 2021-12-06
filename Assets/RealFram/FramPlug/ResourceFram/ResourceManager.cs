@@ -461,7 +461,7 @@ public class ResourceManager : Singleton<ResourceManager>
     /// 根据 ResouceObj 卸载资源
     /// </summary>
     /// <param name="resObj"></param>
-    /// <param name="destoryObj"></param>
+    /// <param name="destoryObj">是否完全清除</param>
     /// <returns></returns>
     public bool ReleaseResrouce(ResouceObj resObj, bool destoryObj = false)
     {
@@ -632,10 +632,11 @@ public class ResourceManager : Singleton<ResourceManager>
 
         if(item.m_Obj != null)
         {
-            item.m_Obj = null;
 #if UNITY_EDITOR
             Resources.UnloadUnusedAssets();
 #endif
+            item.m_Obj = null;
+
         }
 
     }
