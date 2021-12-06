@@ -76,6 +76,26 @@ public class DataEditor
         EditorUtility.ClearProgressBar();
     }
 
+    [MenuItem("Tools/Xml/Excel转Xml")]
+    public static void AllExcelToXml()
+    {
+        //获取Reg文件夹下所有文件
+        string[] filePaths = Directory.GetFiles(RegPath, "*", SearchOption.AllDirectories);
+        for(int i = 0; i < filePaths.Length; i++)
+        {
+            //不是xml文件，过滤
+            if (!filePaths[i].EndsWith(".xml"))
+                continue;
+            EditorUtility.DisplayProgressBar("查找文件夹下的类","正在扫描路径" + filePaths[i] + "... ...", 1.0f / filePaths.Length * i);
+
+            string path = filePaths[i].Substring(filePaths[i].LastIndexOf("/") + 1);
+            ExcelToXml(path.Replace(".xml", ""));
+        }
+
+        AssetDatabase.Refresh();
+        EditorUtility.ClearProgressBar();
+    }
+
     [MenuItem("Tools/测试/测试读取Xml")]
     public static void TestReadXml()
     {
@@ -334,10 +354,12 @@ public class DataEditor
         }
     }
 
-    [MenuItem("Tools/测试/测试Excel转Xml")]
-    public static void ExcelToXml()
+    /// <summary>
+    /// Excel转Xml
+    /// </summary>
+    /// <param name="name"></param>
+    private static void ExcelToXml(string name)
     {
-        string name = "BuffData";
         //读取 reg 类名
         string className = "";
         //读取 xml 名
