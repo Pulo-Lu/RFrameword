@@ -62,7 +62,6 @@
     <Compile Include="Assets\RealFram\Editor\Config\DataEditor.cs" />
     <Compile Include="Assets\RealFram\Editor\Resource\BundleEditor.cs" />
     <Compile Include="Assets\RealFram\Editor\Resource\OfflineDataEditor.cs" />
-    <Compile Include="Assets\Editor\TestEditor.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\RealFram\FramPlug\Plugins\Editor\EPPlus.dll" />
