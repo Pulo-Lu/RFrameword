@@ -8,29 +8,30 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 public class BundleEditor
 {
-    //[MenuItem("Tools/打包")]
+    [MenuItem("Tools/打包")]
     /// <summary>
     /// 默认方法打AB包
     /// </summary>
-    /*public static void Build()
+    public static void BuildDefalt()
     {
-        //  BuildAssetBundles 参数
-        //  第一参数为将资源打包到的目标路径
-        //  第二参数为 Bundle 的压缩格式
-        //  第三参数为 打包的平台
-
+        /*BuildAssetBundles 参数
+          第一参数为将资源打包到的目标路径
+          第二参数为 Bundle 的压缩格式
+          第三参数为 打包的平台
+        */
         BuildPipeline.BuildAssetBundles(Application.streamingAssetsPath, BuildAssetBundleOptions.ChunkBasedCompression,
             EditorUserBuildSettings.activeBuildTarget);
 
         //编辑器刷新
         AssetDatabase.Refresh();
-    }*/
+    }
 
-    //AB包位置
+
+    //AB包打完后 所在的路径
     private static string m_BundleTargetPath = Application.dataPath + "/../AssetBundle/" + EditorUserBuildSettings.activeBuildTarget.ToString();
-
+    //AB包 包名标记 配置文件 所在路径
     private static string ABCONFIGPATH = "Assets/RealFram/Editor/Resource/ABConfig.asset";
-
+    //AB包 二进制清单 所在路径 （打包前会根据资源和包的依赖关系 生成XML和二进制各一份,供加载时使用，弃用原生Manifest,二进制文件会打入包中，xml只作查阅使用）
     private static string ABBYTEPATH = RealConfig.GetRealFram().m_ABBytePath;
 
 
@@ -47,23 +48,28 @@ public class BundleEditor
     private static List<string> m_ConfigFil = new List<string>();
 
 
+    [MenuItem("Tools/AssetBundle/前往配置" ,priority = 1)]
+    public static void FocusOnABNameConfigAsset()
+    {
+        Selection.activeObject = AssetDatabase.LoadAssetAtPath<Object>(ABCONFIGPATH);
+    }
+
     /// <summary>
     /// 基于Assets序列化生成编辑器打包配置表 方法打AB包
     /// </summary>
-    [MenuItem("Tools/打包")]
+    [MenuItem("Tools/AssetBundle/打包(需配置)", priority = 0)]
     public static void Build()
     {
         //打包前将Xml转成二进制
         DataEditor.AllXmlToBinary();
-
         m_ConfigFil.Clear();
         m_AllFileAB.Clear();
-        m_AllFileDir.Clear();      
-        m_AllPrefabDir.Clear(); //每次运行都要清除
+        m_AllFileDir.Clear();
+        m_AllPrefabDir.Clear();//每次运行都要清除
         //加载配置表
         ABConfig abConfig = AssetDatabase.LoadAssetAtPath<ABConfig>(ABCONFIGPATH);
 
-        //根据文件夹打包
+        //------文件夹ab字典添加
         foreach (ABConfig.FileDirABName fileDir in abConfig.m_AllFileDirAB)
         {
             if (m_AllFileDir.ContainsKey(fileDir.ABName))
@@ -82,14 +88,12 @@ public class BundleEditor
         //找到 m_AllPrefabPath 路径下的所有 Prefab, 返回的是GUID
         string[] allStr = AssetDatabase.FindAssets("t:Prefab", abConfig.m_AllPrefabPath.ToArray());
 
-        for (int i = 0; i < allStr.Length; i++) 
+        for (int i = 0; i < allStr.Length; i++)
         {
             // GUIDToAssetPath ：根据GUID获取文件路径
             string path = AssetDatabase.GUIDToAssetPath(allStr[i]);
-            //进度条
-            EditorUtility.DisplayCancelableProgressBar("查找Prefab", "Prefab:" + path, i * 1.0f / allStr.Length);
+            EditorUtility.DisplayProgressBar("查找Prefab", "Prefab:" + path, i * 1.0f / allStr.Length);
             m_ConfigFil.Add(path);
-
             if (!ContainAllFileAB(path))
             {
                 //加载资源
@@ -98,14 +102,14 @@ public class BundleEditor
                 string[] allDepend = AssetDatabase.GetDependencies(path);
                 //临时的List
                 List<string> allDependPath = new List<string>();
-
-                for(int j = 0; j < allDepend.Length; j++)
+                m_AllFileAB.Add(path);
+                allDependPath.Add(path);
+                for (int j = 0; j < allDepend.Length; j++)
                 {
                     //Debug.Log(allDepend[j]);
                     //如果 allDepend[j] 不在AB包里，且不是C#脚本,则加入AB包
-                    if (!ContainAllFileAB(allDepend[j]) && !allDepend[j].EndsWith(".cs"))
-                    {
-                        //加入到过滤的List 
+                    if (!ContainAllFileAB(allDepend[j]) && !allDepend[j].EndsWith(".cs") && !allDepend[j].EndsWith(".prefab"))
+                    { //加入到过滤的List 
                         m_AllFileAB.Add(allDepend[j]);
                         //加入到临时的List 目的：把 Prefab 的相关项打包到一个AB包里
                         allDependPath.Add(allDepend[j]);
@@ -113,7 +117,7 @@ public class BundleEditor
                 }
                 if (m_AllPrefabDir.ContainsKey(obj.name))
                 {
-                    Debug.LogError("存在相同名字的Prefab！" + obj.name);
+                    Debug.LogError("存在相同名字的Prefab！名字：" + obj.name);
                 }
                 else
                 {
@@ -122,7 +126,6 @@ public class BundleEditor
                 }
             }
         }
-
         //设置所有文件夹AB包名
         foreach (string name in m_AllFileDir.Keys)
         {
@@ -133,18 +136,17 @@ public class BundleEditor
         {
             SetABName(name, m_AllPrefabDir[name]);
         }
-
         //打包AB包
         BunildAssetBundle();
-
         //清除AB包名
-        string[] oldABNames = AssetDatabase.GetAllAssetBundleNames();
-        for(int i = 0; i  < oldABNames.Length; i++)
-        {
-            AssetDatabase.RemoveAssetBundleName(oldABNames[i], true);
-            EditorUtility.DisplayCancelableProgressBar("清除AB包名", "名字：" + oldABNames[i], i * 1.0f / oldABNames.Length);
-        }
+        //string[] oldABNames = AssetDatabase.GetAllAssetBundleNames();
+        //for (int i = 0; i < oldABNames.Length; i++)
+        //{
+        //    AssetDatabase.RemoveAssetBundleName(oldABNames[i], true);
+        //    EditorUtility.DisplayProgressBar("清除AB包名", "名字：" + oldABNames[i], i * 1.0f / oldABNames.Length);
+        //}
 
+        AssetDatabase.SaveAssets();
         //刷新编辑器
         AssetDatabase.Refresh();
         //清除进度条 
@@ -186,24 +188,23 @@ public class BundleEditor
     // 打包AB包
     static void BunildAssetBundle()
     {
+        //所有
         string[] allBundles = AssetDatabase.GetAllAssetBundleNames();
-
-        //Key是全路径，value是ab包名字，
+        //key为全路径，value为包名
         Dictionary<string, string> resPathDic = new Dictionary<string, string>();
 
-        for (int i = 0; i < allBundles.Length; i++) 
+        //遍历所有包名
+        for (int i = 0; i < allBundles.Length; i++)
         {
             //根据名字获取路径
             string[] allBundlePath = AssetDatabase.GetAssetPathsFromAssetBundle(allBundles[i]);
             for (int j = 0; j < allBundlePath.Length; j++)
             {
                 if (allBundlePath[j].EndsWith(".cs"))
-                {
                     continue;
-                }
-                Debug.Log("此AB包： " + allBundles[i] + " 下面包含的资源文件路径： " + allBundlePath[j]);
 
-                resPathDic.Add(allBundlePath[j], allBundles[i]);    
+                Debug.Log("此AB包：" + allBundles[i] + "下面包含的资源文件路径：" + allBundlePath[j]);
+                resPathDic.Add(allBundlePath[j], allBundles[i]);
             }
         }
 
@@ -211,27 +212,27 @@ public class BundleEditor
         {
             Directory.CreateDirectory(m_BundleTargetPath);
         }
-
         //删除无用AB包
         DeleteAb();
-
-        //生成自定义配置表
+        //生成自己的配置表
         WriteData(resPathDic);
 
         //生成AB包
-        AssetBundleManifest manifest = BuildPipeline.BuildAssetBundles(m_BundleTargetPath, BuildAssetBundleOptions.ChunkBasedCompression,
-            EditorUserBuildSettings.activeBuildTarget);
-
-        if(manifest == null)
+        AssetBundleManifest manifest = BuildPipeline.BuildAssetBundles(m_BundleTargetPath, BuildAssetBundleOptions.ChunkBasedCompression, EditorUserBuildSettings.activeBuildTarget);
+        if (manifest == null)
         {
-            Debug.LogError("AssetBunle 打包失败！");
+            Debug.LogError("AssetBundle 打包失败！");
         }
         else
         {
-            Debug.Log("AssetBunle 打包成功！");
+            Debug.Log("AssetBundle 打包完毕");
         }
     }
 
+    /// <summary>
+    /// 生成自定义配置表
+    /// </summary>
+    /// <param name="resPathDic"></param>
     static void WriteData(Dictionary<string, string> resPathDic)
     {
         AssetBundleConfig config = new AssetBundleConfig();
@@ -258,7 +259,7 @@ public class BundleEditor
                 string abName = "";
                 if (resPathDic.TryGetValue(tempPath, out abName))
                 {
-                    if (abName == resPathDic[path])
+                    if (abName == resPathDic[path])//依赖资源就在本包内 忽略   （其实就包含了过滤自己）
                         continue;
 
                     if (!abBase.ABDependce.Contains(abName))
@@ -299,7 +300,9 @@ public class BundleEditor
     
     }
 
-    // 删除无用AB包（改名或者没有使用）
+    /// <summary>
+    ///  删除无用AB包（改名或者没有使用）
+    /// </summary>
     static void DeleteAb()
     {
         //获取所有AB包的名字
@@ -359,6 +362,7 @@ public class BundleEditor
     {
         for(int i = 0; i < m_AllFileAB.Count; i++)
         {
+            //单prefab包包含过                              //包含在文件夹下                     //确保剔除包含路径后以/开头 以保证是真的包含在文件夹下
             if (path == m_AllFileAB[i] || (path.Contains(m_AllFileAB[i]) && (path.Replace(m_AllFileAB[i], "")[0] == '/'))) 
             {
                 return true;

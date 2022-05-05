@@ -56,18 +56,18 @@
     <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio Tools for Unity\16.0\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\RealFram\FramPlug\ResourceFram\AssetBundleManager.cs" />
-    <Compile Include="Assets\RealFram\FramPlug\ResourceFram\AssetBundleConfig.cs" />
-    <Compile Include="Assets\RealFram\FramPlug\ResourceFram\OfflineData\EffectOfflineData.cs" />
-    <Compile Include="Assets\RealFram\FramPlug\ResourceFram\ResourceManager.cs" />
-    <Compile Include="Assets\RealFram\FramPlug\ResourceFram\ObjectManager.cs" />
-    <Compile Include="Assets\RealFram\FramPlug\ResourceFram\ClassObjectPool.cs" />
-    <Compile Include="Assets\RealFram\FramPlug\ResourceFram\OfflineData\OfflineData.cs" />
-    <Compile Include="Assets\RealFram\FramPlug\ResourceFram\OfflineData\UIOfflineData.cs" />
-    <Compile Include="Assets\RealFram\FramPlug\ResourceFram\CRC32.cs" />
+    <Compile Include="Assets\RealFram\FramPlug\Res\AssetBundleManager.cs" />
+    <Compile Include="Assets\RealFram\FramPlug\Res\AssetBundleConfig.cs" />
+    <Compile Include="Assets\RealFram\FramPlug\Res\OfflineData\EffectOfflineData.cs" />
+    <Compile Include="Assets\RealFram\FramPlug\Res\ResourceManager.cs" />
+    <Compile Include="Assets\RealFram\FramPlug\Res\ObjectManager.cs" />
+    <Compile Include="Assets\RealFram\FramPlug\Res\ClassObjectPool.cs" />
+    <Compile Include="Assets\RealFram\FramPlug\Res\OfflineData\OfflineData.cs" />
+    <Compile Include="Assets\RealFram\FramPlug\Res\OfflineData\UIOfflineData.cs" />
+    <Compile Include="Assets\RealFram\FramPlug\Res\CRC32.cs" />
   </ItemGroup>
   <ItemGroup>
-     <None Include="Assets\RealFram\FramPlug\ResourceFram\Resource.asmdef" />
+     <None Include="Assets\RealFram\FramPlug\Res\Resource.asmdef" />
     <Reference Include="UnityEngine">
       <HintPath>D:\Unity2019\2020.3.0f1c1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
     </Reference>
@@ -650,11 +650,11 @@
     <Reference Include="System.Xml.Serialization">
       <HintPath>D:\Unity2019\2020.3.0f1c1\Editor\Data\NetStandard\compat\2.0.0\shims\netfx\System.Xml.Serialization.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEditor.UI">
-      <HintPath>Library\ScriptAssemblies\UnityEditor.UI.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEngine.UI">
       <HintPath>Library\ScriptAssemblies\UnityEngine.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.UI">
+      <HintPath>Library\ScriptAssemblies\UnityEditor.UI.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

@@ -437,7 +437,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2886442575932439665}
   - component: {fileID: 4942873114947168513}
-  - component: {fileID: -7364058641704644578}
+  - component: {fileID: 1291962231155102431}
   m_Layer: 5
   m_Name: LoadingPanel
   m_TagString: Untagged
@@ -480,7 +480,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Slider: {fileID: 5980397180093174571}
   m_Text: {fileID: 3121904426699407579}
---- !u!114 &-7364058641704644578
+--- !u!114 &1291962231155102431
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

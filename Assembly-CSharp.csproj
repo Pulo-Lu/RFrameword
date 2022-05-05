@@ -56,18 +56,34 @@
     <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio Tools for Unity\16.0\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\UGUI\Panel\MenuPanel.cs" />
+    <Compile Include="Assets\Demo\Scripts\UGUI\Panel\Object_1_Panel.cs" />
+    <Compile Include="Assets\Demo\Scripts\UGUI\Panel\Main1Panel.cs" />
+    <Compile Include="Assets\Demo\Scripts\UGUI\Panel\MenuPanel.cs" />
+    <Compile Include="Assets\Demo\Scripts\UGUI\Window\Object_1_UI.cs" />
+    <Compile Include="Assets\Demo\Scripts\UGUI\Window\Resour_1_UI.cs" />
+    <Compile Include="Assets\Demo\Scripts\UGUI\Window\Main1UI.cs" />
+    <Compile Include="Assets\Demo\Scripts\UGUI\Panel\ResourPanel.cs" />
     <Compile Include="Assets\Scripts\Data\BuffData.cs" />
-    <Compile Include="Assets\RealFram\FramPlug\ConfigFrame\ConfigManager.cs" />
-    <Compile Include="Assets\Scripts\UGUI\Window\MenuUI.cs" />
-    <Compile Include="Assets\Scripts\UGUI\Panel\LoadingPanel.cs" />
-    <Compile Include="Assets\Scripts\UGUI\Window\LoadingUI.cs" />
+    <Compile Include="Assets\Demo\Scripts\UGUI\Window\Main2UI.cs" />
+    <Compile Include="Assets\Demo\Scripts\UGUI\Window\Main3UI.cs" />
+    <Compile Include="Assets\Demo\Scripts\UGUI\Window\ResourUI.cs" />
+    <Compile Include="Assets\RealFram\FramPlug\Config\ConfigManager.cs" />
+    <Compile Include="Assets\Demo\Scripts\UGUI\Window\MenuUI.cs" />
+    <Compile Include="Assets\Demo\Scripts\UGUI\Panel\Main2Panel.cs" />
+    <Compile Include="Assets\Demo\Scripts\ViewController.cs" />
+    <Compile Include="Assets\Demo\Scripts\UGUI\Panel\LoadingPanel.cs" />
+    <Compile Include="Assets\Demo\Scripts\UGUI\Window\LoadingUI.cs" />
     <Compile Include="Assets\Scripts\Data\MonsterData.cs" />
-    <Compile Include="Assets\RealFram\FramPlug\ConfigFrame\BinarySerializeOpt.cs" />
+    <Compile Include="Assets\RealFram\FramPlug\Config\BinarySerializeOpt.cs" />
+    <Compile Include="Assets\Demo\Scripts\Test.cs" />
     <Compile Include="Assets\Scripts\Manager\GameMapManager.cs" />
+    <Compile Include="Assets\Demo\Scripts\UGUI\Panel\LoadPanel.cs" />
+    <Compile Include="Assets\Demo\Scripts\UGUI\Window\LoadUI.cs" />
+    <Compile Include="Assets\Demo\Scripts\UGUI\Panel\Main3Panel.cs" />
     <Compile Include="Assets\GameData\Modle\benghuai\AutoRotation.cs" />
     <Compile Include="Assets\RealFram\FramPlug\GameStart.cs" />
-    <Compile Include="Assets\RealFram\FramPlug\ConfigFrame\ExcelBase.cs" />
+    <Compile Include="Assets\RealFram\FramPlug\Config\ExcelBase.cs" />
+    <Compile Include="Assets\Demo\Scripts\UGUI\Panel\Resour_1_Panel.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\GameData\Shaders\Xray.shader" />

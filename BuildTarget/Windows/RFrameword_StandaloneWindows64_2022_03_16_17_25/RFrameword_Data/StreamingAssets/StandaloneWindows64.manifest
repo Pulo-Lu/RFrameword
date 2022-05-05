@@ -1,0 +1,53 @@
+ManifestFileVersion: 0
+CRC: 700588374
+AssetBundleManifest:
+  AssetBundleInfos:
+    Info_0:
+      Name: shader
+      Dependencies: {}
+    Info_1:
+      Name: sound
+      Dependencies: {}
+    Info_2:
+      Name: ugui
+      Dependencies: {}
+    Info_3:
+      Name: bytes
+      Dependencies: {}
+    Info_4:
+      Name: attack
+      Dependencies:
+        Dependency_0: shader
+    Info_5:
+      Name: particletest1
+      Dependencies: {}
+    Info_6:
+      Name: test1
+      Dependencies: {}
+    Info_7:
+      Name: loadingpanel
+      Dependencies: {}
+    Info_8:
+      Name: mainpanel
+      Dependencies: {}
+    Info_9:
+      Name: menupanel
+      Dependencies: {}
+    Info_10:
+      Name: object_1_panel
+      Dependencies: {}
+    Info_11:
+      Name: resour_1_panel
+      Dependencies: {}
+    Info_12:
+      Name: resourpanel
+      Dependencies: {}
+    Info_13:
+      Name: testui1
+      Dependencies: {}
+    Info_14:
+      Name: testui2
+      Dependencies: {}
+    Info_15:
+      Name: assetbundleconfig
+      Dependencies: {}

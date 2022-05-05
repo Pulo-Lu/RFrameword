@@ -13,7 +13,6 @@ public class GameObjectTest : MonoBehaviour
         // 实例化对应资源
         // GameObject obj = GameObject.Instantiate(assetBundle.LoadAsset<GameObject>("attack"));
 
-      
     }   
     
     /*void Start()

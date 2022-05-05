@@ -126,5 +126,6 @@ public class GameMapManager : Singleton<GameMapManager>
     {
         ObjectManager.Instance.ClearCache();
         ResourceManager.Instance.ClearCache();
+        Debug.Log("清空缓存");
     }
 }

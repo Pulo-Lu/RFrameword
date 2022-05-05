@@ -9,7 +9,7 @@ public class ABConfig : ScriptableObject
     //单个文件夹路径，会遍历这个文件夹下面所有Prefab，所有的Prefab的名字不能重复，必须保证名字的唯一性
     public List<string> m_AllPrefabPath = new List<string>();
 
-    //多个文件夹路径
+    //单个文件夹里的所有资源打一个包
     public List<FileDirABName> m_AllFileDirAB = new List<FileDirABName>();
 
 

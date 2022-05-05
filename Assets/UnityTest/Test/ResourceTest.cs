@@ -9,20 +9,27 @@ public class ResourceTest : MonoBehaviour
 {
     void Start()
     {
+        #region     Xml序列化读写测试
         //SerilizeTest();
         //DeSerilizerTest();
+        #endregion
 
+        #region     二进制序列化读写测试
         //BinarySerTest();
         //BinaryDeSerTest();
+        #endregion
 
         //ReadTestAssets();
 
-        TestLoadAB();
+        //TestLoadAB();
     }
 
+    /// <summary>
+    /// AB包加载测试
+    /// </summary>
     void TestLoadAB()
     {
-        /*AssetBundle configAB = AssetBundle.LoadFromFile(Application.streamingAssetsPath + "/assetbundleconfig");
+        AssetBundle configAB = AssetBundle.LoadFromFile(Application.streamingAssetsPath + "/assetbundleconfig");
         TextAsset textAsset = configAB.LoadAsset<TextAsset>("AssetBundleConfig");
         MemoryStream stream = new MemoryStream(textAsset.bytes);
         BinaryFormatter bf = new BinaryFormatter();
@@ -31,33 +38,35 @@ public class ResourceTest : MonoBehaviour
         string path = "Assets/GameData/Prefabs/Attack.prefab";
         uint crc = Crc32.GetCrc32(path);
         ABBase abBase = null;
-        for(int i = 0; i < testSerilize.ABList.Count; i++)
+        for (int i = 0; i < testSerilize.ABList.Count; i++)
         {
-            if(testSerilize.ABList[i].Crc == crc)
+            if (testSerilize.ABList[i].Crc == crc)
             {
                 abBase = testSerilize.ABList[i];
             }
         }
 
-        for(int i = 0; i < abBase.ABDependce.Count; i++)
+        for (int i = 0; i < abBase.ABDependce.Count; i++)
         {
             AssetBundle.LoadFromFile(Application.streamingAssetsPath + "/" + abBase.ABDependce[i]);
         }
         AssetBundle assetBundle = AssetBundle.LoadFromFile(Application.streamingAssetsPath + "/" + abBase.ABName);
-        GameObject obj = GameObject.Instantiate(assetBundle.LoadAsset<GameObject>(abBase.AssetName));*/
+        GameObject obj = GameObject.Instantiate(assetBundle.LoadAsset<GameObject>(abBase.AssetName));
     }
 
-    //Asset 序列化读取
-    /*void ReadTestAssets()
+    /// <summary>
+    /// Asset 序列化读取
+    /// </summary>
+    void ReadTestAssets()
     {
-        AssetsSerilize assets = UnityEditor.AssetDatabase.LoadAssetAtPath<AssetsSerilize>("Assets/Scripts/TestAssets.asset");
-        Debug.Log(assets.Id);   
-        Debug.Log(assets.Name);
-        foreach (string a in assets.TestList)
-        {
-            Debug.Log(a);
-        }
-    }*/
+        //AssetsSerilize assets = UnityEditor.AssetDatabase.LoadAssetAtPath<AssetsSerilize>("Assets/Scripts/TestAssets.asset");
+        //Debug.Log(assets.Id);
+        //Debug.Log(assets.Name);
+        //foreach (string a in assets.TestList)
+        //{
+        //    Debug.Log(a);
+        //}
+    }
 
 
     //写
@@ -83,7 +92,10 @@ public class ResourceTest : MonoBehaviour
         }
     }
 
-    //xml序列化  命名空间：System.Xml.Serialization;
+    /// <summary>
+    /// xml序列化  命名空间：System.Xml.Serialization;
+    /// </summary>
+    /// <param name="testSerilize"></param>
     void XmlSerilize(TestSerilize testSerilize)
     {
         //打开文件流（文件地址，文件格式，文件权限）
@@ -99,7 +111,10 @@ public class ResourceTest : MonoBehaviour
         fileStream.Close();
     }
 
-    //xml反向序列化
+    /// <summary>
+    /// xml反向序列化
+    /// </summary>
+    /// <returns></returns>
     TestSerilize XmlDeSerilize()
     {
         FileStream fs = new FileStream(Application.dataPath + "/test.xml", FileMode.Open, FileAccess.ReadWrite, FileShare.ReadWrite);
@@ -123,17 +138,20 @@ public class ResourceTest : MonoBehaviour
     }
 
     //读
-    /*void BinaryDeSerTest()
-    {
-        TestSerilize testSerilize = BinaryDeserilize();
-        Debug.Log(testSerilize.Id + "   " + testSerilize.Name);
-        foreach (int a in testSerilize.List)
-        {
-            Debug.Log(a);
-        }
-    }*/
+    //void BinaryDeSerTest()
+    //{
+    //    TestSerilize testSerilize = BinaryDeserilize();
+    //    Debug.Log(testSerilize.Id + "   " + testSerilize.Name);
+    //    foreach (int a in testSerilize.List)
+    //    {
+    //        Debug.Log(a);
+    //    }
+    //}
 
-    //二进制序列化 命名空间：System.Runtime.Serialization.Formatters.Binary;
+    /// <summary>
+    /// 二进制序列化 命名空间：System.Runtime.Serialization.Formatters.Binary;
+    /// </summary>
+    /// <param name="serilize"></param>
     void BinarySerilize(TestSerilize serilize)
     {
         FileStream fs = new FileStream(Application.dataPath + "/test.bytes", FileMode.Create, FileAccess.ReadWrite, FileShare.ReadWrite);
@@ -143,13 +161,13 @@ public class ResourceTest : MonoBehaviour
     }
 
     //二进制反向序列化
-    /*TestSerilize BinaryDeserilize()
-    {
-        TextAsset textAsset = UnityEditor.AssetDatabase.LoadAssetAtPath<TextAsset>("Assets/test.bytes");
-        MemoryStream stream = new MemoryStream(textAsset.bytes);
-        BinaryFormatter bf = new BinaryFormatter();
-        TestSerilize testSerilize = (TestSerilize)bf.Deserialize(stream);
-        stream.Close();
-        return testSerilize;
-    }*/
+    //TestSerilize BinaryDeserilize()
+    //{
+    //    TextAsset textAsset = UnityEditor.AssetDatabase.LoadAssetAtPath<TextAsset>("Assets/test.bytes");
+    //    MemoryStream stream = new MemoryStream(textAsset.bytes);
+    //    BinaryFormatter bf = new BinaryFormatter();
+    //    TestSerilize testSerilize = (TestSerilize)bf.Deserialize(stream);
+    //    stream.Close();
+    //    return testSerilize;
+    //}
 }

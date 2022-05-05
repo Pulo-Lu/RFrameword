@@ -5,11 +5,16 @@ using UnityEngine.EventSystems;
 
 public class GameStart : MonoSingleton<GameStart>
 {
-    private GameObject m_obj;
+    public bool LoadFormAssetBundle;
+
+    GameObject Obj;
 
     protected override void Awake()
     {
         base.Awake();
+
+        ResourceManager.Instance.m_LoadFormAssetBundle = LoadFormAssetBundle;
+
         GameObject.DontDestroyOnLoad(gameObject);
         AssetBundleManager.Instance.LoadAssetBundleConfig();
         ResourceManager.Instance.Init(this);
@@ -29,8 +34,12 @@ public class GameStart : MonoSingleton<GameStart>
         RegisterUI();
 
         GameMapManager.Instance.Init(this);
+
+        Obj = ObjectManager.Instance.InstantiateObject("Assets/GameData/Prefabs/Attack.prefab", true);
+        ObjectManager.Instance.ReleaseObject(Obj);
+
         //加载场景
-        GameMapManager.Instance.LoadScene(ConStr.MENUSCNEN);
+        GameMapManager.Instance.LoadScene(ConStr.MENU0SCNEN);
     }
 
     /// <summary>
@@ -39,8 +48,22 @@ public class GameStart : MonoSingleton<GameStart>
     void RegisterUI()
     {
         UIManager.Instance.Register<MenuUI>(ConStr.MENUPANEL);
+
         UIManager.Instance.Register<LoadingUI>(ConStr.LOADINGPANEL);
+
+        UIManager.Instance.Register<LoadUI>(ConStr.LOADPANEL);
+
+        UIManager.Instance.Register<Main1UI>(ConStr.MAIN1PANEL);
+
+        UIManager.Instance.Register<Main2UI>(ConStr.MAIN2PANEL);
+
+        UIManager.Instance.Register<Main3UI>(ConStr.MAIN3PANEL);
+
+        UIManager.Instance.Register<ResourUI>(ConStr.RESOURPANEL);
+
+
     }
+
 
     /// <summary>
     /// 加载配置表
@@ -54,7 +77,7 @@ public class GameStart : MonoSingleton<GameStart>
     private void Update()
     {
         UIManager.Instance.OnUpdate();
-       
+
     }
 
     private void OnApplicationQuit()
@@ -64,5 +87,6 @@ public class GameStart : MonoSingleton<GameStart>
         Resources.UnloadUnusedAssets();
         Debug.Log("清空编辑器缓存");
 #endif
+        Application.Quit();
     }
 }

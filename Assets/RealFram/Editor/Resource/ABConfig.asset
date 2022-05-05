@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: ABConfig
   m_EditorClassIdentifier: 
   m_AllPrefabPath:
-  - Assets/GameData/Prefabs
+  - Assets/GameData/Resource/Prefabs
   m_AllFileDirAB:
   - ABName: shader
     Path: Assets/GameData/Shaders

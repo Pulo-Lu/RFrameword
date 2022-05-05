@@ -59,7 +59,15 @@ public class BuildTool
             editorScene.Add(scene.path);
         }
         return editorScene.ToArray();
-    } 
+    }
+
+    [MenuItem("Build/将AB包拷贝到 StreamingAssetsPath 目录")]
+    public static void CopyAB()
+    {
+        string abPath = Application.dataPath + "/../AssetBundle/" + EditorUserBuildSettings.activeBuildTarget.ToString() + "/";
+        Copy(abPath, Application.streamingAssetsPath);
+        AssetDatabase.Refresh();
+    }
 
     /// <summary>
     /// 拷贝AB包
